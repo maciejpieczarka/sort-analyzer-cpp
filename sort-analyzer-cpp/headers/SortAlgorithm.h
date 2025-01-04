@@ -12,10 +12,10 @@ public:
 	// w klasach dziedzicz¹cych
 	virtual void sort(std::vector<int>& data) = 0;
 
-	//Wirtualna metoda, która zwraca nazwê algorytmu
+	//Wirtualna metoda, która zwraca nazwe algorytmu
 	virtual std::string getName() const = 0;
 
-	//Wirtualne metody zwracaj¹ce z³o¿onoœæ czasow¹ i pamiêciow¹
+	//Wirtualne metody zwracajace z³ozonosc czasowa i pamieciowa
 	virtual std::string getTComplexity() const = 0;
 	virtual std::string getSComplexity() const = 0;
 };

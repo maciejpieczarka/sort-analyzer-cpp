@@ -8,10 +8,10 @@ public:
 	//Nadpisana metoda sortowania - Sortowanie babelkowe
 	void sort(std::vector<int>& data) override;
 
-	//Zaimplementowana metoda zwracaj¹ca nazwê algorytmu
+	//Zaimplementowana metoda zwracajaca nazwe algorytmu
 	std::string getName() const override { return "Bubble Sort"; };
 
-	//Zaimplementowane metody zwracaj¹ce z³o¿onoœæ czasow¹ i pamiêciow¹
+	//Zaimplementowane metody zwracajace zlozonosc czasowa i pamieciowa
 	std::string getTComplexity() const override { return "O(n^2)"; };
 	std::string getSComplexity() const override { return "O(1)"; };
 };
