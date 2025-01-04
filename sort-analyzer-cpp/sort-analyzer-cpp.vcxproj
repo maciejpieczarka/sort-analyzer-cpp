@@ -128,10 +128,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\BubbleSort.cpp" />
+    <ClCompile Include="src\InsertionSort.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\SelectionSort.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\BubbleSort.h" />
+    <ClInclude Include="headers\HeapSort.h" />
+    <ClInclude Include="headers\InsertionSort.h" />
+    <ClInclude Include="headers\SelectionSort.h" />
     <ClInclude Include="headers\SortAlgorithm.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
