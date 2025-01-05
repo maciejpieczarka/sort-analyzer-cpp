@@ -127,12 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\AlgorithmComparision.cpp" />
     <ClCompile Include="src\BubbleSort.cpp" />
     <ClCompile Include="src\InsertionSort.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\SelectionSort.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="headers\AlgorithmComparison.h" />
     <ClInclude Include="headers\BubbleSort.h" />
     <ClInclude Include="headers\HeapSort.h" />
     <ClInclude Include="headers\InsertionSort.h" />

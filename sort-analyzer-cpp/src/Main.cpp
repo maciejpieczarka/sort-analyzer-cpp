@@ -1,12 +1,17 @@
 ﻿#include <iostream>
 
 #include "../headers/BubbleSort.h"
+#include "../headers/InsertionSort.h"
+#include "../headers/AlgorithmComparison.h"
 #include <vector>
 int main()
 {
-	BubbleSort bubbleSort;
-	std::vector<int> data = { 10, 8, 4, 5, 2, 6, 18, 4 , -9, 0, -0};
-	bubbleSort.sort(data);
-	for (auto i : data)
-		std::cout << i << " ";
+	AlgorithmComparison comparison;
+
+	comparison.addAlgorithm(std::make_unique<BubbleSort>());
+	comparison.addAlgorithm(std::make_unique<InsertionSort>());
+
+	std::vector<int> data = comparison.generateDataset(20000, 0, 999999);
+
+	comparison.compareData(data);
 }
