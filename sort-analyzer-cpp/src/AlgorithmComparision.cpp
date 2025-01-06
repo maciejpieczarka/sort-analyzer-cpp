@@ -30,6 +30,15 @@ void AlgorithmComparison::compareData(const std::vector<int>& data) {
 std::vector<int> AlgorithmComparison::generateDataset(size_t dataSize, int min, int max) {
 	std::vector<int> data(dataSize);
 
+
+	/*
+		Do generowania liczb pseudolosowych wykorzystuje biblioteke <random>,
+		ktora jest nowsza bardziej precyzyjna i bezpieczniejsza niz funkcje z biblioteki <cstdlib>.
+		Generatory liczb pseudolosowych z biblioteki <random> sa bardziej wydajne i maja lepsze wlasciwosci statystyczne.
+		Jednak daloby sie rowniez uzyskac podobny efekt z wykorzystaniem funkcji rand() z biblioteki <cstdlib>.
+	*/
+
+
 	std::random_device rd; //Wygenerowanie "ziarna" do generatora liczb pseudolosowych
 	std::mt19937 gen(rd()); //Utworzenie generatora liczb pseudolosowych z wykorzystaniem algorytmu Mersenne Twister
 	std::uniform_int_distribution<int> rozklad(min, max); //Utworzenie rozkladu jednostajnego liczb calkowitych w zakreesie min - max
