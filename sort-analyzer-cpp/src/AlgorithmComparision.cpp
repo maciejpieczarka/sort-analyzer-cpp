@@ -4,6 +4,7 @@
 #include <iomanip> //Manipulatory strumienia
 #include <chrono> // Mierzenie czasu wykonywania algorytmow
 #include <random> // Generacja liczb pseudolosowych
+#include <filesystem>
 
 void AlgorithmComparison::addAlgorithm(std::unique_ptr<SortAlgorithm> algorithm) {
 	algorithms.push_back(std::move(algorithm));
@@ -51,4 +52,35 @@ std::vector<int> AlgorithmComparison::generateDataset(size_t dataSize, int min, 
 	return data;
 };
 
+std::vector<int> AlgorithmComparison::uploadFileDataset(std::string fileName) {
+	std::ifstream file(fileName); //Otworzenie pliku do odczytu danych
+
+	std::vector<int> data; //Utworzenie tablicy dynamicznej, ktora bedzie przechowywac dane z pliku
+
+	if (file.good() == true) { //Sprawdzenie czy plik zostal otworzony poprawnie
+		int number{}; //Zmienna pomocnicza do przechowywania liczb z pliku
+		while (file >> number) { //Petla, ktora wczytuje liczby z pliku
+			data.push_back(number); //Dodanie liczby do tablicy
+		}
+		file.close(); //Zamkniecie pliku
+	}
+	else {
+		std::cout << "Blad otwarcia pliku: " << fileName << ". Sprawdz czy podana sciezka jest wlasciwa." << std::endl;
+	}
+	return data;
+};
+
+void AlgorithmComparison::generateFileDataset(std::string fileName, size_t dataSize, int min, int max) {
+	std::ofstream file("./data/" + fileName); //Otworzenie pliku do zapisu danych
+	if (file.good() == true) { //Sprawdzenie czy plik zostal otworzony poprawnie
+		std::vector<int> data = generateDataset(dataSize, min, max); //Wygenerowanie danych
+		for (const int& number : data) { //Petla, ktora zapisuje dane do pliku
+			file << number << " ";
+		}
+		file.close(); //Zamkniecie pliku
+	}
+	else {
+		std::cout << "Blad otwarcia pliku: " << fileName << ". Sprawdz czy podana sciezka jest wlasciwa." << std::endl;
+	}
+}
 
