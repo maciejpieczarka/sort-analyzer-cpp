@@ -3,6 +3,7 @@
 #include "SortAlgorithm.h"
 #include <vector>
 #include <memory> //Biblioteka do inteligentnych wskaznikow
+#include <fstream>
 
 class AlgorithmComparison {
 private:
@@ -28,4 +29,6 @@ public:
 	// TODO: Metoda do porywnywania nie na liczbach
 
 	static std::vector<int> generateDataset(size_t dataSize, int min = 0, int max = 100);
+
+	static std::vector<int> uploadFileDataset(std::string fileName);
 };
