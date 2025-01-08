@@ -18,6 +18,6 @@ public:
 	std::string getSComplexity() const override { return "O(N)"; };
 
 private:
-	void mergeSort(std::vector<int>& data, int left, int right);
-	void merge(std::vector<int>& data, int left, int mid, int right);
+	void mergeSort(std::vector<int>& data);
+	void merge(std::vector<int>& leftArray, std::vector<int>& rightArray, std::vector<int>& data);
 };

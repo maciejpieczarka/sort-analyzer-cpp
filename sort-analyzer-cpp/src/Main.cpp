@@ -17,8 +17,8 @@ int main()
 	comparison.addAlgorithm(std::make_unique<MergeSort>());
 	comparison.addAlgorithm(std::make_unique<SelectionSort>());
 
-	//Geneeracja pliku z danymi
-	comparison.generateFileDataset("Tablica10.txt", 100, 0, 9999);
+	//Generacja pliku z danymi
+	//comparison.generateFileDataset("Tablica10.txt", 100, 0, 9999);
 
 	std::vector<int> data = comparison.uploadFileDataset("./data/Tablica10.txt");
 	
