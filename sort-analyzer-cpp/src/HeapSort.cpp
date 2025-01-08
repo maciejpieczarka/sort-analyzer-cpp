@@ -36,7 +36,7 @@ void HeapSort::heapify(std::vector<int>& data, int dataSize, int i) {
 };
 
 void HeapSort::buildHeap(std::vector<int>& data, int dataSize) {
-	for (size_t i = dataSize / 2 - 1; i >= 0; --i) {
-		heapify(data, n, i);
+	for (int i = dataSize / 2 - 1; i >= 0; --i) {
+		heapify(data, dataSize, i);
 	}
 };

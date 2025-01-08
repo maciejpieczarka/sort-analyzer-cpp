@@ -2,6 +2,9 @@
 
 #include "../headers/BubbleSort.h"
 #include "../headers/InsertionSort.h"
+#include "../headers/HeapSort.h"
+#include "../headers/MergeSort.h"
+#include "../headers/SelectionSort.h"
 #include "../headers/AlgorithmComparison.h"
 #include <vector>
 int main()
@@ -10,8 +13,11 @@ int main()
 
 	comparison.addAlgorithm(std::make_unique<BubbleSort>());
 	comparison.addAlgorithm(std::make_unique<InsertionSort>());
+	comparison.addAlgorithm(std::make_unique<HeapSort>());
+	comparison.addAlgorithm(std::make_unique<MergeSort>());
+	comparison.addAlgorithm(std::make_unique<SelectionSort>());
 
-	std::vector<int> data = comparison.generateDataset(20000, 0, 999999);
+	std::vector<int> data = comparison.generateDataset(100000, 0, 9);
 
 	comparison.compareData(data);
 }
