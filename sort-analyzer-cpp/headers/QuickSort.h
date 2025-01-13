@@ -1,17 +1,20 @@
 #pragma once
 
 #include "SortAlgorithm.h"
+#include <vector>
 
-//Klasa odpowiadajaca za sortowanie przez wstawianie
-class InsertionSort : public SortAlgorithm {
+class QuickSort : public SortAlgorithm {
 public:
-	//Nadpisana metoda sortowania - sortowanie przez wstawianie
 	void sort(std::vector<int>& data) override;
 
 	//Zaimplementowana metoda zwracajaca nazwe algorytmu
-	std::string getName() const override { return "Insertion Sort"; };
+	std::string getName() const override { return "Quick Sort"; };
 
 	//Zaimplementowane metody zwracajace z³o¿onosc czasowa i pamieciowa
 	std::string getTComplexity() const override { return "TODO"; }; //TODO: Different time complexity
-	std::string getSComplexity() const override { return "O(1)"; };
+	std::string getSComplexity() const override { return "O(n)"; };
+
+private:
+	void quickSort(std::vector<int>& data, int low, int high);
+	int partition(std::vector<int>& data, int low, int high);
 };

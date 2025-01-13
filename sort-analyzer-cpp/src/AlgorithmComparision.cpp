@@ -11,11 +11,12 @@ void AlgorithmComparison::addAlgorithm(std::unique_ptr<SortAlgorithm> algorithm)
 };
 
 void AlgorithmComparison::compareData(const std::vector<int>& data) {
-	std::cout << std::setw(15) << "Algorytm" 
-			  << std::setw(25) << "Czas Wykonywania (ms)" 
-			  << std::setw(20) << "Zlozonosc Czasowa"
-			  << std::setw(25) << "Zlozonosc Pamieciowa\n";
-	std::cout << std::string(85, '-') << std::endl;
+	std::cout << std::string(88, '-') << std::endl;
+	std::cout << std::setw(18) << "Algorytm |" 
+			  << std::setw(25) << " Czas Wykonywania (ms) |" 
+			  << std::setw(20) << " Zlozonosc Czasowa |"
+			  << std::setw(25) << " Zlozonosc Pamieciowa |\n";
+	std::cout << std::string(88, '-') << std::endl;
 
 	for (const std::unique_ptr<SortAlgorithm>& algorithm : algorithms) {
 		std::vector<int> kopiaTablicy = data;
@@ -26,9 +27,9 @@ void AlgorithmComparison::compareData(const std::vector<int>& data) {
 
 		std::chrono::duration<double, std::milli> duration = end - start;
 
-		std::cout << std::setw(15) << algorithm->getName()
-			<< std::setw(25) << duration.count()
-			<< std::setw(20) << algorithm->getTComplexity()
+		std::cout << std::setw(16) << algorithm->getName() 
+			<< std::setw(25) << duration.count() 
+			<< std::setw(20) << algorithm->getTComplexity() 
 			<< std::setw(25) << algorithm->getSComplexity() << "\n";
 	}
 };
