@@ -132,6 +132,7 @@
     <ClCompile Include="src\HeapSort.cpp" />
     <ClCompile Include="src\InsertionSort.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\MenuManager.cpp" />
     <ClCompile Include="src\MergeSort.cpp" />
     <ClCompile Include="src\QuickSort.cpp" />
     <ClCompile Include="src\SelectionSort.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="headers\BubbleSort.h" />
     <ClInclude Include="headers\HeapSort.h" />
     <ClInclude Include="headers\InsertionSort.h" />
+    <ClInclude Include="headers\MenuManager.h" />
     <ClInclude Include="headers\MergeSort.h" />
     <ClInclude Include="headers\QuickSort.h" />
     <ClInclude Include="headers\SelectionSort.h" />

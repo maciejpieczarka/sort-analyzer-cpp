@@ -8,10 +8,13 @@
 #include "../headers/SelectionSort.h"
 #include "../headers/QuickSort.h"
 #include "../headers/AlgorithmComparison.h"
+#include "../headers/MenuManager.h"
 
 int main()
 {
+	unsigned short menuChoice1{}, menuChoice2{}, menuChoice3{}, menuState{};
 	AlgorithmComparison comparison;
+	MenuManager menuManager;
 
 	comparison.addAlgorithm(std::make_unique<BubbleSort>());
 	comparison.addAlgorithm(std::make_unique<InsertionSort>());
@@ -26,6 +29,8 @@ int main()
 	//std::vector<int> data = comparison.uploadFileDataset("./data/Tablica10.txt");
 	
 	std::vector<int> data = comparison.generateDataset(10000, 0, 9);
-
 	comparison.compareData(data);
+
+	
+	//menuManager.displayMenu();
 }
