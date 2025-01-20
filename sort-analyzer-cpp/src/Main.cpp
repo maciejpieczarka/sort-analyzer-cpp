@@ -10,9 +10,13 @@
 #include "../headers/AlgorithmComparison.h"
 #include "../headers/MenuManager.h"
 
+void instruction() {
+	std::cout << "Instrukcja oprogramowania.\n";
+}
+
 int main()
 {
-	unsigned short menuChoice1{}, menuChoice2{}, menuChoice3{}, menuState{};
+	MenuManager mainMenu, dataTypeMenu;
 	AlgorithmComparison comparison;
 	MenuManager menuManager;
 
@@ -23,13 +27,26 @@ int main()
 	comparison.addAlgorithm(std::make_unique<SelectionSort>());
 	comparison.addAlgorithm(std::make_unique<QuickSort>());
 
+	//Ddawanie opcji do menu wyboru typu danych
+	dataTypeMenu.addOption("Losowo", []() {});
+
+	//Dodawanie opcji do mennu glownego
+	mainMenu.addSubMenu("Porownaj algorytmy", dataTypeMenu);
+	mainMenu.addOption("Wyswietl Instrukcje", []() {
+		std::cout << "Instrukcja aplikacji.\n"; 
+		});
+
+	
+	mainMenu.runMenu();
+
+
 	//Generacja pliku z danymi
 	//comparison.generateFileDataset("Tablica10.txt", 100, 0, 9999);
 
 	//std::vector<int> data = comparison.uploadFileDataset("./data/Tablica10.txt");
 	
-	std::vector<int> data = comparison.generateDataset(10000, 0, 9);
-	comparison.compareData(data);
+	/*std::vector<int> data = comparison.generateDataset(10000, 0, 9);
+	comparison.compareData(data);*/
 
 	
 	//menuManager.displayMenu();
