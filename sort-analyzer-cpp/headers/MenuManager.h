@@ -8,6 +8,15 @@
 
 class MenuManager {
 public:
+    //Deklaracje konstruktorow
+    MenuManager();
+    MenuManager(const std::string& consolePhrase, bool& isMain);
+
+    //Deklaracje setterow
+	void setConsolePhrase(const std::string& consolePhrase);
+	void setIsMain(const bool& isMain);
+	void setShouldExit(const bool& shouldExit);
+
     // Dodaje zagniezdzone menu, ktore wyswietla sie jako opcja i przekierowuje
     // do nastepnego wyboru
     void addSubMenu(const std::string& description, MenuManager nestedMenu);
@@ -16,12 +25,16 @@ public:
     void addOption(const std::string& description, const std::function<void()>& action);
 
     // Metoda wyswietlajaca menu
-    void displayMenu(std::string menuDescription = "") const;
+    void displayMenu() const;
 
 	// Metoda uruchamiajaca menu i zajmujaca sie wyborem opcji
     void runMenu();
-
+    
 private:
+	bool m_ShouldExit = false;
+	bool m_isMain = false;
+    std::string m_consolePhrase;
+
     //Dynamiczna tablica przechowujaca nazwy opcji menu
     std::vector<std::string> options;
 

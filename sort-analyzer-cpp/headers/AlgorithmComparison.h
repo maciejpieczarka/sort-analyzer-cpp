@@ -28,9 +28,9 @@ public:
 
 	// TODO: Metoda do porywnywania nie na liczbach
 
-	static std::vector<int> generateDataset(size_t dataSize, int min = 0, int max = 100);
+	static std::vector<int> generateDataset(int dataSize, int min = 0, int max = 100);
 
 	static std::vector<int> uploadFileDataset(std::string fileName);
 
-	static void generateFileDataset(std::string fileName, size_t dataSize, int min = 0, int max = 100);
+	static void generateFileDataset(std::string fileName, int dataSize, int min = 0, int max = 100);
 };

@@ -11,6 +11,10 @@ void AlgorithmComparison::addAlgorithm(std::unique_ptr<SortAlgorithm> algorithm)
 };
 
 void AlgorithmComparison::compareData(const std::vector<int>& data) {
+	std::cout << std::string(88, '=') << "\n";
+	std::cout << std::setw(50) << "Sort-Analyzer" << std::string(38, ' ') << "\n";
+	std::cout << std::string(88, '=') << "\n";
+
 	std::cout << std::string(88, '-') << std::endl;
 	std::cout << std::setw(18) << "Algorytm |" 
 			  << std::setw(25) << " Czas Wykonywania (ms) |" 
@@ -34,7 +38,7 @@ void AlgorithmComparison::compareData(const std::vector<int>& data) {
 	}
 };
 
-std::vector<int> AlgorithmComparison::generateDataset(size_t dataSize, int min, int max) {
+std::vector<int> AlgorithmComparison::generateDataset(int dataSize, int min, int max) {
 	std::vector<int> data(dataSize);
 
 
@@ -76,7 +80,7 @@ std::vector<int> AlgorithmComparison::uploadFileDataset(std::string fileName) {
 	return data;
 };
 
-void AlgorithmComparison::generateFileDataset(std::string fileName, size_t dataSize, int min, int max) {
+void AlgorithmComparison::generateFileDataset(std::string fileName, int dataSize, int min, int max) {
 	std::ofstream file("./data/" + fileName); //Otworzenie pliku do zapisu danych
 	if (file.good() == true) { //Sprawdzenie czy plik zostal otworzony poprawnie
 		std::vector<int> data = generateDataset(dataSize, min, max); //Wygenerowanie danych

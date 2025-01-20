@@ -16,10 +16,14 @@ void instruction() {
 
 int main()
 {
-	MenuManager mainMenu, dataTypeMenu;
+	MenuManager mainMenu, dataTypeMenu, algorithmPickerMenu;
+	
 	AlgorithmComparison comparison;
 	MenuManager menuManager;
+	int dataSize{}, dataRange{};
 
+
+	// Zainicjalizowanie obiektow algorytmow
 	comparison.addAlgorithm(std::make_unique<BubbleSort>());
 	comparison.addAlgorithm(std::make_unique<InsertionSort>());
 	comparison.addAlgorithm(std::make_unique<HeapSort>());
@@ -27,9 +31,26 @@ int main()
 	comparison.addAlgorithm(std::make_unique<SelectionSort>());
 	comparison.addAlgorithm(std::make_unique<QuickSort>());
 
-	//Ddawanie opcji do menu wyboru typu danych
-	dataTypeMenu.addOption("Losowo", []() {});
+	//Konfiguracja menu do wyboru typu danych
+	dataTypeMenu.setConsolePhrase("W jaki sposob chcesz przekazac dane do sortowania?");
+	dataTypeMenu.setShouldExit(true);
+	//Dodawanie opcji do menu wyboru typu danych
+	dataTypeMenu.addOption("Losowo", [&dataSize, &dataRange, &comparison, dataTypeMenu](){
+		std::cout << "Podaj ilosc danych do wygenerowania (1 - 10 000): ";
+		std::cin >> dataSize;
+		std::system("cls");
+		std::cout << "Podaj zakres generowanych liczb (1 - 10 000): ";
+		std::cin >> dataRange;
+		std::system("cls");
+		std::vector<int> data = comparison.generateDataset(dataSize, 0, dataRange);
+		comparison.compareData(data);
+		});
+	dataTypeMenu.addOption("Recznie", []() {});
+	dataTypeMenu.addOption("Z Pliku", []() {});
 
+
+	//konfiguracja menu glownego
+	mainMenu.setIsMain(true);
 	//Dodawanie opcji do mennu glownego
 	mainMenu.addSubMenu("Porownaj algorytmy", dataTypeMenu);
 	mainMenu.addOption("Wyswietl Instrukcje", []() {
