@@ -1,7 +1,7 @@
 #include "../headers/BubbleSort.h"
 
 //Implementacja metody sortowania babelkowego
-void BubbleSort::sort(std::vector<int>& data) {
+void BubbleSort::sort(std::vector<double>& data) {
 	unsigned int iloscDanych = data.size();
 	int temp{};
 

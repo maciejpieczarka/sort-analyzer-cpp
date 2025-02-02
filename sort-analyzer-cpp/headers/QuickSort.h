@@ -5,7 +5,7 @@
 
 class QuickSort : public SortAlgorithm {
 public:
-	void sort(std::vector<int>& data) override;
+	void sort(std::vector<double>& data) override;
 
 	//Zaimplementowana metoda zwracajaca nazwe algorytmu
 	std::string getName() const override { return "Quick Sort"; };
@@ -15,6 +15,6 @@ public:
 	std::string getSComplexity() const override { return "O(n)"; };
 
 private:
-	void quickSort(std::vector<int>& data, int low, int high);
-	int partition(std::vector<int>& data, int low, int high);
+	void quickSort(std::vector<double>& data, int low, int high);
+	int partition(std::vector<double>& data, int low, int high);
 };

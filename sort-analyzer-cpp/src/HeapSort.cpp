@@ -1,6 +1,6 @@
 #include "../headers/HeapSort.h"
 
-void HeapSort::sort(std::vector<int>& data) {
+void HeapSort::sort(std::vector<double>& data) {
 	int dataSize = data.size();
 
 	buildHeap(data, dataSize);
@@ -13,7 +13,7 @@ void HeapSort::sort(std::vector<int>& data) {
 	}
 };
 
-void HeapSort::heapify(std::vector<int>& data, int dataSize, int i) {
+void HeapSort::heapify(std::vector<double>& data, int dataSize, int i) {
 	int largest = i;
 	int left = 2 * i + 1;
 	int right = 2 * i + 2;
@@ -35,7 +35,7 @@ void HeapSort::heapify(std::vector<int>& data, int dataSize, int i) {
 	}
 };
 
-void HeapSort::buildHeap(std::vector<int>& data, int dataSize) {
+void HeapSort::buildHeap(std::vector<double>& data, int dataSize) {
 	for (int i = dataSize / 2 - 1; i >= 0; --i) {
 		heapify(data, dataSize, i);
 	}

@@ -58,7 +58,7 @@ void MenuManager::displayMenu() const {
 
 void MenuManager::runMenu() {
     while (true) {
-        int wybranaOpcja{};
+        int wybranaOpcja;
         displayMenu();
         std::cout << "\nTwoj wybor: ";
         std::cin >> wybranaOpcja;

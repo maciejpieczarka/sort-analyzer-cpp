@@ -1,7 +1,7 @@
 #include "../headers/SelectionSort.h"
 
 //Implementacja metody sortowania przez wybieranie
-void SelectionSort::sort(std::vector<int>& data)
+void SelectionSort::sort(std::vector<double>& data)
 {
 	unsigned int iloscDanych = data.size();
 	int temp{};

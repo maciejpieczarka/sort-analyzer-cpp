@@ -1,10 +1,10 @@
 #include "../headers/MergeSort.h"
 
-void MergeSort::sort(std::vector<int>& data) {
+void MergeSort::sort(std::vector<double>& data) {
 	mergeSort(data);
 }
 
-void MergeSort::merge(std::vector<int>& leftArray, std::vector<int>& rightArray, std::vector<int>& data) {
+void MergeSort::merge(std::vector<double>& leftArray, std::vector<double>& rightArray, std::vector<double>& data) {
 	int leftSize = data.size() / 2;
 	int rightSize = data.size() - leftSize;
 
@@ -37,7 +37,7 @@ void MergeSort::merge(std::vector<int>& leftArray, std::vector<int>& rightArray,
 };
 
 
-void MergeSort::mergeSort(std::vector<int>& data) {
+void MergeSort::mergeSort(std::vector<double>& data) {
 	int dataSize = data.size();
 	if (dataSize <= 1) return;
 
@@ -46,8 +46,8 @@ void MergeSort::mergeSort(std::vector<int>& data) {
 
 	// Dynamiczne tablice tymczasowe, ktore przechowuja wartosci lewej i prawej
 	// polowy tablicy "data"
-	std::vector<int> leftArray(middle);
-	std::vector<int> rightArray(dataSize - middle);
+	std::vector<double> leftArray(middle);
+	std::vector<double> rightArray(dataSize - middle);
 
 	int j{};
 	for (int i = 0; i < dataSize; ++i) {

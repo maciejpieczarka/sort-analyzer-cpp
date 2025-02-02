@@ -24,13 +24,13 @@ public:
 	// Metoda odpowiadajaca za porównywanie algorytmów na tym samym
 	// zestawie danych.
 	// W tym wypadku porównanie zachodzi na liczbach
-	void compareData(const std::vector<int>& data);
+	void compareData(const std::vector<double>& data);
 
 	// TODO: Metoda do porywnywania nie na liczbach
 
-	static std::vector<int> generateDataset(int dataSize, int min = 0, int max = 100);
+	static std::vector<double> generateDataset(int dataSize, int min = 0, int max = 100);
 
-	static std::vector<int> uploadFileDataset(std::string fileName);
+	static std::vector<double> uploadFileDataset(std::string fileName);
 
 	static void generateFileDataset(std::string fileName, int dataSize, int min = 0, int max = 100);
 };

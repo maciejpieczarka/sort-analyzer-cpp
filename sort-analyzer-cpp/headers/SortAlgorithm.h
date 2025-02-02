@@ -10,7 +10,7 @@ public:
 
 	//Czysto wirtualna metoda sortowania do zaimplementowania 
 	// w klasach dziedzicz¹cych
-	virtual void sort(std::vector<int>& data) = 0;
+	virtual void sort(std::vector<double>& data) = 0;
 
 	//Wirtualna metoda, która zwraca nazwe algorytmu
 	virtual std::string getName() const = 0;

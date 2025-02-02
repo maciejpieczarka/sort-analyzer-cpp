@@ -6,7 +6,7 @@
 class BubbleSort : public SortAlgorithm {
 public:
 	//Nadpisana metoda sortowania - Sortowanie babelkowe
-	void sort(std::vector<int>& data) override;
+	void sort(std::vector<double>& data) override;
 
 	//Zaimplementowana metoda zwracajaca nazwe algorytmu
 	std::string getName() const override { return "Bubble Sort"; };

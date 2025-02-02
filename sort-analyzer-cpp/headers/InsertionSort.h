@@ -6,7 +6,7 @@
 class InsertionSort : public SortAlgorithm {
 public:
 	//Nadpisana metoda sortowania - sortowanie przez wstawianie
-	void sort(std::vector<int>& data) override;
+	void sort(std::vector<double>& data) override;
 
 	//Zaimplementowana metoda zwracajaca nazwe algorytmu
 	std::string getName() const override { return "Insertion Sort"; };

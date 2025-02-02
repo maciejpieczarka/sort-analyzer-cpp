@@ -1,13 +1,13 @@
 #include "../headers/QuickSort.h"
 
-void QuickSort::sort(std::vector<int>& data) {
+void QuickSort::sort(std::vector<double>& data) {
 	if (data.empty()) return;
 
 	quickSort(data, 0, data.size() - 1);
 }
 
 // Rekurencyjna implementacja metody quickSort, ktoora sortuje elementy tablicy
-void QuickSort::quickSort(std::vector<int>& data, int low, int high) {
+void QuickSort::quickSort(std::vector<double>& data, int low, int high) {
     if (low < high) {
         //TODO: komentarz
         int pivotIndex = partition(data, low, high);
@@ -18,7 +18,7 @@ void QuickSort::quickSort(std::vector<int>& data, int low, int high) {
     }
 }
 
-int QuickSort::partition(std::vector<int>& data, int low, int high) {
+int QuickSort::partition(std::vector<double>& data, int low, int high) {
     int pivot = data[high];
 	int temp{};
 

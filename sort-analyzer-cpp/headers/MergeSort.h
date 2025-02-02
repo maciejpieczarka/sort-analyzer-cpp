@@ -8,7 +8,7 @@
 class MergeSort : public SortAlgorithm {
 public:
 	//Nadpisana metoda sortowania - sortowanie przez scalanie
-	void sort(std::vector<int>& data) override;
+	void sort(std::vector<double>& data) override;
 
 	//Zaimplementowana metoda zwracajaca nazwe algorytmu
 	std::string getName() const override { return "Merge Sort"; };
@@ -18,6 +18,6 @@ public:
 	std::string getSComplexity() const override { return "O(N)"; };
 
 private:
-	void mergeSort(std::vector<int>& data);
-	void merge(std::vector<int>& leftArray, std::vector<int>& rightArray, std::vector<int>& data);
+	void mergeSort(std::vector<double>& data);
+	void merge(std::vector<double>& leftArray, std::vector<double>& rightArray, std::vector<double>& data);
 };

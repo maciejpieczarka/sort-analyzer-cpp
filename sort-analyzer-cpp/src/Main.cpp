@@ -35,17 +35,29 @@ int main()
 	dataTypeMenu.setConsolePhrase("W jaki sposob chcesz przekazac dane do sortowania?");
 	dataTypeMenu.setShouldExit(true);
 	//Dodawanie opcji do menu wyboru typu danych
-	dataTypeMenu.addOption("Losowo", [&dataSize, &dataRange, &comparison, dataTypeMenu](){
+	dataTypeMenu.addOption("Losowo", [&dataSize, &dataRange, &comparison](){
 		std::cout << "Podaj ilosc danych do wygenerowania (1 - 10 000): ";
 		std::cin >> dataSize;
 		std::system("cls");
 		std::cout << "Podaj zakres generowanych liczb (1 - 10 000): ";
 		std::cin >> dataRange;
 		std::system("cls");
-		std::vector<int> data = comparison.generateDataset(dataSize, 0, dataRange);
+		std::vector<double> data = comparison.generateDataset(dataSize, 0, dataRange);
 		comparison.compareData(data);
 		});
-	dataTypeMenu.addOption("Recznie", []() {});
+	dataTypeMenu.addOption("Recznie", [&comparison, &dataSize]() {
+		std::vector<double> data;
+		double num{};
+		std::cout << "Ile liczb chcesz posortowac?: ";
+		std::cin >> dataSize;
+		for (int i = 0; i < dataSize; i++) {
+			std::cout << "Podaj liczbe " << i+1 << ": ";
+			std::cin >> num;
+			data.push_back(num);
+		}
+		std::system("cls");
+		comparison.compareData(data);
+		});
 	dataTypeMenu.addOption("Z Pliku", []() {});
 
 
@@ -54,7 +66,10 @@ int main()
 	//Dodawanie opcji do mennu glownego
 	mainMenu.addSubMenu("Porownaj algorytmy", dataTypeMenu);
 	mainMenu.addOption("Wyswietl Instrukcje", []() {
-		std::cout << "Instrukcja aplikacji.\n"; 
+		std::cout << "Sort Analyzer to aplikacja stworzona do porownania wydajnosci 6 algorytmow sortujacych.\n ";
+		std::cout << "Aplikacja pozwala na wybor sposobu przekazania danych do sortowania oraz porownanie algorytmow na tych samych danych.\n";
+		std::cout << "Poruszanie sie po menu odbywa sie za pomoca klawiszy numerycznych.\n";
+		std::cout << "Aplikacja stworzona przez: Maciej Pieczarka MS - Informatyka. Semestr I, Grupa 2.\n";
 		});
 
 	

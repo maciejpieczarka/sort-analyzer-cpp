@@ -6,7 +6,7 @@
 class HeapSort : public SortAlgorithm {
 public:
 	//Nadpisana metoda sortowania - sortowanie przez kopcowanie
-	void sort(std::vector<int>& data) override;
+	void sort(std::vector<double>& data) override;
 
 	//Zaimplementowana metoda zwracajaca nazwe algorytmu
 	std::string getName() const override { return "Heap Sort"; };
@@ -16,6 +16,6 @@ public:
 	std::string getSComplexity() const override { return "O(1)"; };
 
 private:
-	void heapify(std::vector<int>& data, int n, int i);
-	void buildHeap(std::vector<int>& data, int n);
+	void heapify(std::vector<double>& data, int n, int i);
+	void buildHeap(std::vector<double>& data, int n);
 };

@@ -10,7 +10,9 @@ void AlgorithmComparison::addAlgorithm(std::unique_ptr<SortAlgorithm> algorithm)
 	algorithms.push_back(std::move(algorithm));
 };
 
-void AlgorithmComparison::compareData(const std::vector<int>& data) {
+void AlgorithmComparison::compareData(const std::vector<double>& data) {
+	double bestTime{};
+	std::string bestAlgorithm;
 	std::cout << std::string(88, '=') << "\n";
 	std::cout << std::setw(50) << "Sort-Analyzer" << std::string(38, ' ') << "\n";
 	std::cout << std::string(88, '=') << "\n";
@@ -23,23 +25,29 @@ void AlgorithmComparison::compareData(const std::vector<int>& data) {
 	std::cout << std::string(88, '-') << std::endl;
 
 	for (const std::unique_ptr<SortAlgorithm>& algorithm : algorithms) {
-		std::vector<int> kopiaTablicy = data;
+		std::vector<double> kopiaTablicy = data;
 
 		auto start = std::chrono::high_resolution_clock::now();
 		algorithm->sort(kopiaTablicy);//Lub (*algorithm).sort(...)
 		auto end = std::chrono::high_resolution_clock::now();
 
 		std::chrono::duration<double, std::milli> duration = end - start;
+		if (static_cast<double>(duration.count()) < bestTime || bestTime == 0) {
+			bestTime = static_cast<double>(duration.count());
+			bestAlgorithm = algorithm->getName();
+		}
 
 		std::cout << std::setw(16) << algorithm->getName() 
 			<< std::setw(25) << duration.count() 
 			<< std::setw(20) << algorithm->getTComplexity() 
 			<< std::setw(25) << algorithm->getSComplexity() << "\n";
 	}
+	std::cout << "\nZwyciezca sortowania jest algorytm: " << bestAlgorithm << "\n";
+	std::cout << "Czas sortowania: " << bestTime << " ms!\n";
 };
 
-std::vector<int> AlgorithmComparison::generateDataset(int dataSize, int min, int max) {
-	std::vector<int> data(dataSize);
+std::vector<double> AlgorithmComparison::generateDataset(int dataSize, int min, int max) {
+	std::vector<double> data(dataSize);
 
 
 	/*
@@ -52,7 +60,7 @@ std::vector<int> AlgorithmComparison::generateDataset(int dataSize, int min, int
 
 	std::random_device rd; //Wygenerowanie "ziarna" do generatora liczb pseudolosowych
 	std::mt19937 gen(rd()); //Utworzenie generatora liczb pseudolosowych z wykorzystaniem algorytmu Mersenne Twister
-	std::uniform_int_distribution<int> rozklad(min, max); //Utworzenie rozkladu jednostajnego liczb calkowitych w zakreesie min - max
+	std::uniform_real_distribution<double> rozklad(static_cast<double>(min), static_cast<double>(max)); //Utworzenie rozkladu jednostajnego liczb calkowitych w zakreesie min - max
 
 	//Petla, ktora wypelnia tablice liczbami pseudolosowymi
 	for (size_t i = 0; i < dataSize; ++i) {
@@ -62,13 +70,13 @@ std::vector<int> AlgorithmComparison::generateDataset(int dataSize, int min, int
 	return data;
 };
 
-std::vector<int> AlgorithmComparison::uploadFileDataset(std::string fileName) {
+std::vector<double> AlgorithmComparison::uploadFileDataset(std::string fileName) {
 	std::ifstream file(fileName); //Otworzenie pliku do odczytu danych
 
-	std::vector<int> data; //Utworzenie tablicy dynamicznej, ktora bedzie przechowywac dane z pliku
+	std::vector<double> data; //Utworzenie tablicy dynamicznej, ktora bedzie przechowywac dane z pliku
 
 	if (file.good() == true) { //Sprawdzenie czy plik zostal otworzony poprawnie
-		int number{}; //Zmienna pomocnicza do przechowywania liczb z pliku
+		double number{}; //Zmienna pomocnicza do przechowywania liczb z pliku
 		while (file >> number) { //Petla, ktora wczytuje liczby z pliku
 			data.push_back(number); //Dodanie liczby do tablicy
 		}
@@ -83,8 +91,8 @@ std::vector<int> AlgorithmComparison::uploadFileDataset(std::string fileName) {
 void AlgorithmComparison::generateFileDataset(std::string fileName, int dataSize, int min, int max) {
 	std::ofstream file("./data/" + fileName); //Otworzenie pliku do zapisu danych
 	if (file.good() == true) { //Sprawdzenie czy plik zostal otworzony poprawnie
-		std::vector<int> data = generateDataset(dataSize, min, max); //Wygenerowanie danych
-		for (const int& number : data) { //Petla, ktora zapisuje dane do pliku
+		std::vector<double> data = generateDataset(dataSize, min, max); //Wygenerowanie danych
+		for (const double& number : data) { //Petla, ktora zapisuje dane do pliku
 			file << number << " ";
 		}
 		file.close(); //Zamkniecie pliku

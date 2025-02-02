@@ -1,6 +1,6 @@
 #include "../headers/InsertionSort.h"
 
-void InsertionSort::sort(std::vector<int>& data)
+void InsertionSort::sort(std::vector<double>& data)
 {
 	unsigned int iloscDanych = data.size();
 	int temp{};
