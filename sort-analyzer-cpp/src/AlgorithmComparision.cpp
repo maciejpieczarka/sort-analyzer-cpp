@@ -46,7 +46,7 @@ void AlgorithmComparison::compareData(const std::vector<double>& data) {
 	std::cout << "Czas sortowania: " << bestTime << " ms!\n";
 };
 
-std::vector<double> AlgorithmComparison::generateDataset(int dataSize, int min, int max) {
+std::vector<double> AlgorithmComparison::generateDataset(int dataSize, double min, double max) {
 	std::vector<double> data(dataSize);
 
 
@@ -60,7 +60,7 @@ std::vector<double> AlgorithmComparison::generateDataset(int dataSize, int min, 
 
 	std::random_device rd; //Wygenerowanie "ziarna" do generatora liczb pseudolosowych
 	std::mt19937 gen(rd()); //Utworzenie generatora liczb pseudolosowych z wykorzystaniem algorytmu Mersenne Twister
-	std::uniform_real_distribution<double> rozklad(static_cast<double>(min), static_cast<double>(max)); //Utworzenie rozkladu jednostajnego liczb calkowitych w zakreesie min - max
+	std::uniform_real_distribution<double> rozklad(min, max); //Utworzenie rozkladu jednostajnego liczb calkowitych w zakreesie min - max
 
 	//Petla, ktora wypelnia tablice liczbami pseudolosowymi
 	for (size_t i = 0; i < dataSize; ++i) {
@@ -83,12 +83,12 @@ std::vector<double> AlgorithmComparison::uploadFileDataset(std::string fileName)
 		file.close(); //Zamkniecie pliku
 	}
 	else {
-		std::cout << "Blad otwarcia pliku: " << fileName << ". Sprawdz czy podana sciezka jest wlasciwa." << std::endl;
+		std::cout << "Blad otwarcia pliku: " << fileName << ". Sprawdz czy plik zostal utworzony." << std::endl;
 	}
 	return data;
 };
 
-void AlgorithmComparison::generateFileDataset(std::string fileName, int dataSize, int min, int max) {
+void AlgorithmComparison::generateFileDataset(std::string fileName, int dataSize, double min, double max) {
 	std::ofstream file("./data/" + fileName); //Otworzenie pliku do zapisu danych
 	if (file.good() == true) { //Sprawdzenie czy plik zostal otworzony poprawnie
 		std::vector<double> data = generateDataset(dataSize, min, max); //Wygenerowanie danych

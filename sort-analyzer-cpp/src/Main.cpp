@@ -1,4 +1,6 @@
 ﻿#include <iostream>
+#include <climits>
+#include <typeinfo>
 
 //Pliki naglowkowe
 #include "../headers/BubbleSort.h"
@@ -10,6 +12,7 @@
 #include "../headers/AlgorithmComparison.h"
 #include "../headers/MenuManager.h"
 
+
 void instruction() {
 	std::cout << "Instrukcja oprogramowania.\n";
 }
@@ -20,7 +23,8 @@ int main()
 	
 	AlgorithmComparison comparison;
 	MenuManager menuManager;
-	int dataSize{}, dataRange{};
+	int dataSize{};
+	double dataRange{};
 
 
 	// Zainicjalizowanie obiektow algorytmow
@@ -36,13 +40,31 @@ int main()
 	dataTypeMenu.setShouldExit(true);
 	//Dodawanie opcji do menu wyboru typu danych
 	dataTypeMenu.addOption("Losowo", [&dataSize, &dataRange, &comparison](){
-		std::cout << "Podaj ilosc danych do wygenerowania (1 - 10 000): ";
-		std::cin >> dataSize;
+		while (true) {
+			std::cout << "Podaj ilosc danych do wygenerowania (1 - 10 000): ";
+			std::cin >> dataSize;
+			if (dataSize < 1 || dataSize >= 10000) {
+				std::system("cls");
+				std::cout << "Niepoprawna ilosc danych. Podaj liczbe z zakresu 1 - 10 000.\n";
+			}
+			else {
+				break;
+			}
+		}
 		std::system("cls");
-		std::cout << "Podaj zakres generowanych liczb (1 - 10 000): ";
-		std::cin >> dataRange;
+		while (true) {
+			std::cout << "Podaj zakres generowanych liczb: ";
+			std::cin >> dataRange;
+			if (dataRange < -DBL_MAX || dataRange > DBL_MAX) {
+				std::system("cls");
+				std::cout << "Podano nieprawidlowy zakres!\n";
+			}
+			else {
+				break;
+			}
+		}
 		std::system("cls");
-		std::vector<double> data = comparison.generateDataset(dataSize, 0, dataRange);
+		std::vector<double> data = comparison.generateDataset(dataSize, -DBL_MAX, dataRange);
 		comparison.compareData(data);
 		});
 	dataTypeMenu.addOption("Recznie", [&comparison, &dataSize]() {
@@ -58,7 +80,27 @@ int main()
 		std::system("cls");
 		comparison.compareData(data);
 		});
-	dataTypeMenu.addOption("Z Pliku", []() {});
+	dataTypeMenu.addOption("Z Pliku", [&comparison]() {
+		std::string path;
+		char choice;
+		std::vector<double> data;
+		std::cout << "Utworz plik o nazwie: \'/data/data.txt\'\n";
+		std::cout << "Liczby w pliku powinny byc oddzielone spacja.\n";
+		std::cout << "\nCzy utworzono plik? (T/N): ";
+		std::cin >> choice;
+		if (choice == 'T' || choice == 't') {
+			std::vector<double> data = comparison.uploadFileDataset("./data/data.txt");
+			if (data.size() > 0) {
+				comparison.compareData(data);
+			}
+		}
+		else {
+			std::cout << "Generuje losowy plik...\n";
+			comparison.generateFileDataset("data.txt", 10000, -DBL_MAX, DBL_MAX);
+			std::vector<double> data = comparison.uploadFileDataset("./data/data.txt");
+			comparison.compareData(data);
+		}
+		});
 
 
 	//konfiguracja menu glownego
@@ -70,6 +112,9 @@ int main()
 		std::cout << "Aplikacja pozwala na wybor sposobu przekazania danych do sortowania oraz porownanie algorytmow na tych samych danych.\n";
 		std::cout << "Poruszanie sie po menu odbywa sie za pomoca klawiszy numerycznych.\n";
 		std::cout << "Aplikacja stworzona przez: Maciej Pieczarka MS - Informatyka. Semestr I, Grupa 2.\n";
+		});
+	mainMenu.addOption("Wyczysc Ekran", []() {
+		std::system("cls");
 		});
 
 	
