@@ -1,5 +1,6 @@
 #include "../headers/HeapSort.h"
 
+//Metoda sortowania przez kopcowanie
 void HeapSort::sort(std::vector<double>& data) {
 	int dataSize = data.size();
 
@@ -35,6 +36,7 @@ void HeapSort::heapify(std::vector<double>& data, int dataSize, int i) {
 	}
 };
 
+//Metoda budowania kopca
 void HeapSort::buildHeap(std::vector<double>& data, int dataSize) {
 	for (int i = dataSize / 2 - 1; i >= 0; --i) {
 		heapify(data, dataSize, i);

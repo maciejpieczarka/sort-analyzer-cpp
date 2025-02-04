@@ -10,6 +10,7 @@ void AlgorithmComparison::addAlgorithm(std::unique_ptr<SortAlgorithm> algorithm)
 	algorithms.push_back(std::move(algorithm));
 };
 
+//Implementacja metody porownujacej algorytmy na tych samych danych
 void AlgorithmComparison::compareData(const std::vector<double>& data) {
 	std::ofstream wyniki("./data/wyniki.txt");
 	double bestTime{};
@@ -28,10 +29,12 @@ void AlgorithmComparison::compareData(const std::vector<double>& data) {
 	for (const std::unique_ptr<SortAlgorithm>& algorithm : algorithms) {
 		std::vector<double> kopiaTablicy = data;
 
+		//Pomiar czasu wykonywania algorytmu
 		auto start = std::chrono::high_resolution_clock::now();
 		algorithm->sort(kopiaTablicy);//Lub (*algorithm).sort(...)
 		auto end = std::chrono::high_resolution_clock::now();
 
+		//Obliczenie czasu wykonywania algorytmu, zapisanie wynikow do pliku oraz wypisanie najlepszego na ekran
 		std::chrono::duration<double, std::milli> duration = end - start;
 		if (wyniki.good() == true) {
 			wyniki << algorithm->getName() << " " << duration.count() << "\n";
@@ -50,6 +53,7 @@ void AlgorithmComparison::compareData(const std::vector<double>& data) {
 	std::cout << "Czas sortowania: " << bestTime << " ms!\n";
 };
 
+//Implementacja metody generujacej zestaw losowych danych
 std::vector<double> AlgorithmComparison::generateDataset(int dataSize, double min, double max) {
 	std::vector<double> data(dataSize);
 
@@ -74,6 +78,7 @@ std::vector<double> AlgorithmComparison::generateDataset(int dataSize, double mi
 	return data;
 };
 
+//Implementacja metody wczytujacej dane z pliku
 std::vector<double> AlgorithmComparison::uploadFileDataset(std::string fileName) {
 	std::ifstream file(fileName); //Otworzenie pliku do odczytu danych
 
@@ -92,6 +97,7 @@ std::vector<double> AlgorithmComparison::uploadFileDataset(std::string fileName)
 	return data;
 };
 
+//Implementacja metody generujacej plik z danymi
 void AlgorithmComparison::generateFileDataset(std::string fileName, int dataSize, double min, double max) {
 	std::ofstream file("./data/" + fileName); //Otworzenie pliku do zapisu danych
 	if (file.good() == true) { //Sprawdzenie czy plik zostal otworzony poprawnie

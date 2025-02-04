@@ -48,6 +48,7 @@ void MenuManager::displayMenu() const {
         std::cout << (i + 1) << ". " << options[i] << "\n";
     }
     
+	//Jesli menu jest menu glownym, wyswietl opcje zakonczenia programu, w przeciwnym wypadku opcje cofnij
 	if (m_isMain) {
 		std::cout << "0. Zakoncz program\n";
     }
@@ -56,6 +57,7 @@ void MenuManager::displayMenu() const {
     }
 }
 
+//Implementacja metody uruchamiajacej menu
 void MenuManager::runMenu() {
     while (true) {
         int wybranaOpcja;
@@ -71,9 +73,11 @@ void MenuManager::runMenu() {
             break;
         }
 
+		//Sprawdzenie czy wybrana opcja miesci sie w zakresie opcji i uruchomienie odpowiedniej funkcji
         if (wybranaOpcja > 0 && wybranaOpcja <= static_cast<int>(funkcjeOpcji.size())) { //Konwersja z typu size_t na typ int
             funkcjeOpcji[wybranaOpcja - 1]();   // Wykonaj wybrana funkcje
-			if (m_ShouldExit) {
+			//Jesli ustawiono flage, zakoncz dzialanie menu
+            if (m_ShouldExit) {
 				break;
 			}
         }

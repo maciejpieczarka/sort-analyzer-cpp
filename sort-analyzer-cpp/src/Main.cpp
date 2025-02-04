@@ -13,22 +13,20 @@
 #include "../headers/AlgorithmComparison.h"
 #include "../headers/MenuManager.h"
 
-
-void instruction() {
-	std::cout << "Instrukcja oprogramowania.\n";
-}
-
 int main()
 {
+	//Inicjalizacja klas menu
 	MenuManager mainMenu, dataTypeMenu, algorithmPickerMenu;
 	
+	//Inicjalizacja klasy porownujacej algorytmy
 	AlgorithmComparison comparison;
-	MenuManager menuManager;
+
+	//Zmienne przechowujace ilosc danych oraz zakres generowanych liczb
 	int dataSize{};
 	double dataRange{};
 
 
-	// Zainicjalizowanie obiektow algorytmow
+	// Zainicjalizowanie obiektow algorytmow jako unikalne wskazniki
 	comparison.addAlgorithm(std::make_unique<BubbleSort>());
 	comparison.addAlgorithm(std::make_unique<InsertionSort>());
 	comparison.addAlgorithm(std::make_unique<HeapSort>());
@@ -43,6 +41,7 @@ int main()
 	//Dodawanie opcji do menu wyboru typu danych
 
 	//Obsluga generowania losowych danych do sortowania
+	//Przekazanie do funkcji lambda zmiennych dataSize, dataRange oraz comparison poprzez referencje, aby pracowac na oryginalach
 	dataTypeMenu.addOption("Losowo", [&dataSize, &dataRange, &comparison](){
 		while (true) {
 			std::cout << "Podaj ilosc danych do wygenerowania (1 - 10 000): ";
@@ -68,6 +67,7 @@ int main()
 			}
 		}
 		std::system("cls");
+		//Generuje zestaw danych od -1000000 do dataRange
 		std::vector<double> data = comparison.generateDataset(dataSize, -1e6, dataRange);
 		comparison.compareData(data);
 		});
@@ -106,6 +106,7 @@ int main()
 		std::cout << "\nCzy utworzono plik? (T/N): ";
 		std::cin >> choice;
 		if (choice == 'T' || choice == 't') {
+			//Wczytuje zestaw danych z pliku data.txt
 			std::vector<double> data = comparison.uploadFileDataset("./data/data.txt");
 			if (data.size() > 0) {
 				comparison.compareData(data);
@@ -116,6 +117,7 @@ int main()
 		}
 		else {
 			std::cout << "Generuje losowy plik...\n";
+			//Generuje plik z danymi w zakresie od -1000000 do 1000000
 			comparison.generateFileDataset("data.txt", 10000, -1e6, 1e6);
 			std::vector<double> data = comparison.uploadFileDataset("./data/data.txt");
 			comparison.compareData(data);
@@ -127,28 +129,20 @@ int main()
 	mainMenu.setIsMain(true);
 	//Dodawanie opcji do mennu glownego
 	mainMenu.addSubMenu("Porownaj algorytmy", dataTypeMenu);
+
+	//Opcja wyswietlajaca instrukcje
 	mainMenu.addOption("O Programie", []() {
-		std::cout << "Sort Analyzer to aplikacja stworzona do porownania wydajnosci 6 algorytmow sortujacych.\n ";
+		std::cout << "Sort Analyzer to aplikacja stworzona do porownania wydajnosci 6 algorytmow sortujacych.\n";
 		std::cout << "Aplikacja pozwala na wybor sposobu przekazania danych do sortowania oraz porownanie algorytmow na tych samych danych.\n";
-		std::cout << "Poruszanie sie po menu odbywa sie za pomoca klawiszy numerycznych.\n";
+		std::cout << "Poruszanie sie po menu odbywa sie za pomoca klawiszy numerycznych.\n\n";
 		std::cout << "Aplikacja stworzona przez: Maciej Pieczarka MS - Informatyka. Semestr I, Grupa 2.\n";
 		});
+
+	//Opcja czyszczenia ekranu konsoli
 	mainMenu.addOption("Wyczysc Ekran", []() {
 		std::system("cls");
 		});
 
 	
 	mainMenu.runMenu();
-
-
-	//Generacja pliku z danymi
-	//comparison.generateFileDataset("Tablica10.txt", 100, 0, 9999);
-
-	//std::vector<int> data = comparison.uploadFileDataset("./data/Tablica10.txt");
-	
-	/*std::vector<int> data = comparison.generateDataset(10000, 0, 9);
-	comparison.compareData(data);*/
-
-	
-	//menuManager.displayMenu();
 }

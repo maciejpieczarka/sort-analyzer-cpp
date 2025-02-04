@@ -1,6 +1,6 @@
-Bubble Sort 1382.47
-Insertion Sort 431.12
-Heap Sort 6.5502
-Merge Sort 27.2541
-Selection Sort 600.953
-Quick Sort 3.819
+Bubble Sort 2088.67
+Insertion Sort 701.229
+Heap Sort 20.5602
+Merge Sort 81.9226
+Selection Sort 988.568
+Quick Sort 5.1214
