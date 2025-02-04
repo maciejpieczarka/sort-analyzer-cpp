@@ -11,6 +11,7 @@ void AlgorithmComparison::addAlgorithm(std::unique_ptr<SortAlgorithm> algorithm)
 };
 
 void AlgorithmComparison::compareData(const std::vector<double>& data) {
+	std::ofstream wyniki("./data/wyniki.txt");
 	double bestTime{};
 	std::string bestAlgorithm;
 	std::cout << std::string(88, '=') << "\n";
@@ -32,6 +33,9 @@ void AlgorithmComparison::compareData(const std::vector<double>& data) {
 		auto end = std::chrono::high_resolution_clock::now();
 
 		std::chrono::duration<double, std::milli> duration = end - start;
+		if (wyniki.good() == true) {
+			wyniki << algorithm->getName() << " " << duration.count() << "\n";
+		}
 		if (static_cast<double>(duration.count()) < bestTime || bestTime == 0) {
 			bestTime = static_cast<double>(duration.count());
 			bestAlgorithm = algorithm->getName();

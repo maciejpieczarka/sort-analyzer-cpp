@@ -6,7 +6,7 @@ void QuickSort::sort(std::vector<double>& data) {
 	quickSort(data, 0, data.size() - 1);
 }
 
-// Rekurencyjna implementacja metody quickSort, ktoora sortuje elementy tablicy
+// Rekurencyjna implementacja metody quickSort, ktora sortuje elementy tablicy
 void QuickSort::quickSort(std::vector<double>& data, int low, int high) {
     if (low < high) {
         //TODO: komentarz
@@ -19,7 +19,7 @@ void QuickSort::quickSort(std::vector<double>& data, int low, int high) {
 }
 
 int QuickSort::partition(std::vector<double>& data, int low, int high) {
-    int pivot = data[high];
+    double pivot = data[high];
 	int temp{};
 
     int i = low - 1;

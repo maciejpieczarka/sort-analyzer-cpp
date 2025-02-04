@@ -11,7 +11,7 @@ public:
 	std::string getName() const override { return "Quick Sort"; };
 
 	//Zaimplementowane metody zwracajace z³o¿onosc czasowa i pamieciowa
-	std::string getTComplexity() const override { return "TODO"; }; //TODO: Different time complexity
+	std::string getTComplexity() const override { return "O(nLog(n))"; }; //TODO: Different time complexity
 	std::string getSComplexity() const override { return "O(n)"; };
 
 private:

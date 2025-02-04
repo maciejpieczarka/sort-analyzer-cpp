@@ -4,7 +4,6 @@
 #include <vector>
 #include <memory> //Biblioteka do inteligentnych wskaznikow
 #include <fstream>
-#include <climits>
 
 class AlgorithmComparison {
 private:
@@ -29,9 +28,9 @@ public:
 
 	// TODO: Metoda do porywnywania nie na liczbach
 
-	static std::vector<double> generateDataset(int dataSize, double min = -DBL_MAX, double max = DBL_MAX);
+	static std::vector<double> generateDataset(int dataSize, double min = -1e6, double max = 1e6);
 
 	static std::vector<double> uploadFileDataset(std::string fileName);
 
-	static void generateFileDataset(std::string fileName, int dataSize, double min = -DBL_MAX, double max = DBL_MAX);
+	static void generateFileDataset(std::string fileName, int dataSize, double min = -1e6, double max = 1e6);
 };

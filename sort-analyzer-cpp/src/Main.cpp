@@ -1,6 +1,7 @@
 ﻿#include <iostream>
-#include <climits>
+#include <limits>
 #include <typeinfo>
+#include <cmath>
 
 //Pliki naglowkowe
 #include "../headers/BubbleSort.h"
@@ -38,12 +39,15 @@ int main()
 	//Konfiguracja menu do wyboru typu danych
 	dataTypeMenu.setConsolePhrase("W jaki sposob chcesz przekazac dane do sortowania?");
 	dataTypeMenu.setShouldExit(true);
+
 	//Dodawanie opcji do menu wyboru typu danych
+
+	//Obsluga generowania losowych danych do sortowania
 	dataTypeMenu.addOption("Losowo", [&dataSize, &dataRange, &comparison](){
 		while (true) {
 			std::cout << "Podaj ilosc danych do wygenerowania (1 - 10 000): ";
 			std::cin >> dataSize;
-			if (dataSize < 1 || dataSize >= 10000) {
+			if (dataSize < 1 || dataSize > 10000) {
 				std::system("cls");
 				std::cout << "Niepoprawna ilosc danych. Podaj liczbe z zakresu 1 - 10 000.\n";
 			}
@@ -55,7 +59,7 @@ int main()
 		while (true) {
 			std::cout << "Podaj zakres generowanych liczb: ";
 			std::cin >> dataRange;
-			if (dataRange < -DBL_MAX || dataRange > DBL_MAX) {
+			if (dataRange <= -1e6 || dataRange > 1e6) {
 				std::system("cls");
 				std::cout << "Podano nieprawidlowy zakres!\n";
 			}
@@ -64,14 +68,25 @@ int main()
 			}
 		}
 		std::system("cls");
-		std::vector<double> data = comparison.generateDataset(dataSize, -DBL_MAX, dataRange);
+		std::vector<double> data = comparison.generateDataset(dataSize, -1e6, dataRange);
 		comparison.compareData(data);
 		});
+
+	//Obsluga recznego wpisywania danych do sortowania
 	dataTypeMenu.addOption("Recznie", [&comparison, &dataSize]() {
 		std::vector<double> data;
 		double num{};
-		std::cout << "Ile liczb chcesz posortowac?: ";
-		std::cin >> dataSize;
+		while (true) {
+			std::cout << "Ile liczb chcesz posortowac? (1 - 100): ";
+			std::cin >> dataSize;
+			if (dataSize < 1 || dataSize > 100) {
+				std::system("cls");
+				std::cout << "Niepoprawna ilosc danych. Podaj liczbe z zakresu 1 - 100.\n";
+			}
+			else {
+				break;
+			}
+		}
 		for (int i = 0; i < dataSize; i++) {
 			std::cout << "Podaj liczbe " << i+1 << ": ";
 			std::cin >> num;
@@ -80,6 +95,8 @@ int main()
 		std::system("cls");
 		comparison.compareData(data);
 		});
+
+	//Obsluga wczytywania danych z pliku do sortowania
 	dataTypeMenu.addOption("Z Pliku", [&comparison]() {
 		std::string path;
 		char choice;
@@ -93,10 +110,13 @@ int main()
 			if (data.size() > 0) {
 				comparison.compareData(data);
 			}
+			else {
+				std::cout << "Plik jest pusty.\n";
+			}
 		}
 		else {
 			std::cout << "Generuje losowy plik...\n";
-			comparison.generateFileDataset("data.txt", 10000, -DBL_MAX, DBL_MAX);
+			comparison.generateFileDataset("data.txt", 10000, -1e6, 1e6);
 			std::vector<double> data = comparison.uploadFileDataset("./data/data.txt");
 			comparison.compareData(data);
 		}
@@ -107,7 +127,7 @@ int main()
 	mainMenu.setIsMain(true);
 	//Dodawanie opcji do mennu glownego
 	mainMenu.addSubMenu("Porownaj algorytmy", dataTypeMenu);
-	mainMenu.addOption("Wyswietl Instrukcje", []() {
+	mainMenu.addOption("O Programie", []() {
 		std::cout << "Sort Analyzer to aplikacja stworzona do porownania wydajnosci 6 algorytmow sortujacych.\n ";
 		std::cout << "Aplikacja pozwala na wybor sposobu przekazania danych do sortowania oraz porownanie algorytmow na tych samych danych.\n";
 		std::cout << "Poruszanie sie po menu odbywa sie za pomoca klawiszy numerycznych.\n";

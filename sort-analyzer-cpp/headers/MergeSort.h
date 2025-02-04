@@ -14,7 +14,7 @@ public:
 	std::string getName() const override { return "Merge Sort"; };
 
 	//Zaimplementowane metody zwracajace zlozonosc czasowa i pamieciowa
-	std::string getTComplexity() const override { return "O(N*logN)"; };
+	std::string getTComplexity() const override { return "O(nLog(n))"; };
 	std::string getSComplexity() const override { return "O(N)"; };
 
 private:
