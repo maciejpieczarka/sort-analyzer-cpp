@@ -1,4 +1,5 @@
 #include "../headers/MenuManager.h"
+#include "../headers/ConsoleUtils.h"
 #include <iomanip>
 //Implementacja konstruktora domyslnego
 MenuManager::MenuManager() 
@@ -57,6 +58,8 @@ void MenuManager::displayMenu() const {
     }
 }
 
+
+
 //Implementacja metody uruchamiajacej menu
 void MenuManager::runMenu() {
     while (true) {
@@ -64,7 +67,7 @@ void MenuManager::runMenu() {
         displayMenu();
         std::cout << "\nTwoj wybor: ";
         std::cin >> wybranaOpcja;
-        std::system("cls");
+        ConsoleUtils::clear();
 
         if (wybranaOpcja == 0) {
             if (m_isMain) {

@@ -12,6 +12,9 @@
 #include "../headers/QuickSort.h"
 #include "../headers/AlgorithmComparison.h"
 #include "../headers/MenuManager.h"
+#include "../headers/ConsoleUtils.h"
+
+
 
 int main()
 {
@@ -47,26 +50,26 @@ int main()
 			std::cout << "Podaj ilosc danych do wygenerowania (1 - 10 000): ";
 			std::cin >> dataSize;
 			if (dataSize < 1 || dataSize > 10000) {
-				std::system("cls");
+				ConsoleUtils::clear();
 				std::cout << "Niepoprawna ilosc danych. Podaj liczbe z zakresu 1 - 10 000.\n";
 			}
 			else {
 				break;
 			}
 		}
-		std::system("cls");
+		ConsoleUtils::clear();
 		while (true) {
 			std::cout << "Podaj zakres generowanych liczb: ";
 			std::cin >> dataRange;
 			if (dataRange <= -1e6 || dataRange > 1e6) {
-				std::system("cls");
+				ConsoleUtils::clear();
 				std::cout << "Podano nieprawidlowy zakres!\n";
 			}
 			else {
 				break;
 			}
 		}
-		std::system("cls");
+		ConsoleUtils::clear();
 		//Generuje zestaw danych od -1000000 do dataRange
 		std::vector<double> data = comparison.generateDataset(dataSize, -1e6, dataRange);
 		comparison.compareData(data);
@@ -80,7 +83,7 @@ int main()
 			std::cout << "Ile liczb chcesz posortowac? (1 - 100): ";
 			std::cin >> dataSize;
 			if (dataSize < 1 || dataSize > 100) {
-				std::system("cls");
+				ConsoleUtils::clear();
 				std::cout << "Niepoprawna ilosc danych. Podaj liczbe z zakresu 1 - 100.\n";
 			}
 			else {
@@ -92,7 +95,7 @@ int main()
 			std::cin >> num;
 			data.push_back(num);
 		}
-		std::system("cls");
+		ConsoleUtils::clear();
 		comparison.compareData(data);
 		});
 
@@ -140,7 +143,7 @@ int main()
 
 	//Opcja czyszczenia ekranu konsoli
 	mainMenu.addOption("Wyczysc Ekran", []() {
-		std::system("cls");
+		ConsoleUtils::clear();
 		});
 
 	
