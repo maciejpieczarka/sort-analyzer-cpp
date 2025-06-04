@@ -49,7 +49,7 @@ int main()
 		while (true) {
 			std::cout << "Podaj ilosc danych do wygenerowania (1 - 10 000): ";
 			std::cin >> dataSize;
-			if (dataSize < 1 || dataSize > 10000) {
+			if (dataSize < 1 || dataSize > 100000) {
 				ConsoleUtils::clear();
 				std::cout << "Niepoprawna ilosc danych. Podaj liczbe z zakresu 1 - 10 000.\n";
 			}
@@ -110,7 +110,7 @@ int main()
 		std::cin >> choice;
 		if (choice == 'T' || choice == 't') {
 			//Wczytuje zestaw danych z pliku data.txt
-			std::vector<double> data = comparison.uploadFileDataset("./data/data.txt");
+			std::vector<double> data = comparison.uploadFileDataset("../data/data.txt");
 			if (data.size() > 0) {
 				comparison.compareData(data);
 			}
@@ -122,7 +122,7 @@ int main()
 			std::cout << "Generuje losowy plik...\n";
 			//Generuje plik z danymi w zakresie od -1000000 do 1000000
 			comparison.generateFileDataset("data.txt", 10000, -1e6, 1e6);
-			std::vector<double> data = comparison.uploadFileDataset("./data/data.txt");
+			std::vector<double> data = comparison.uploadFileDataset("../data/data.txt");
 			comparison.compareData(data);
 		}
 		});

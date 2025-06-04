@@ -12,7 +12,7 @@ void AlgorithmComparison::addAlgorithm(std::unique_ptr<SortAlgorithm> algorithm)
 
 //Implementacja metody porownujacej algorytmy na tych samych danych
 void AlgorithmComparison::compareData(const std::vector<double>& data) {
-	std::ofstream wyniki("./data/wyniki.txt");
+	std::ofstream wyniki("../data/wyniki.txt");
 	double bestTime{};
 	std::string bestAlgorithm;
 	std::cout << std::string(88, '=') << "\n";
