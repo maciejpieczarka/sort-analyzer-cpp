@@ -24,11 +24,18 @@ public:
 	// Dodaje nowa opcje do menu z jej opisem i funkcja do wykonania
     void addOption(const std::string& description, const std::function<void()>& action);
 
+    // Umozliwa edycje opisu opcji menu
+    void updateOptionDesc(int index, const std::string& newDesc);
+
+    // Zwraca liczbe opcji
+    int getOptionsCount() const;
+
     // Metoda wyswietlajaca menu
     void displayMenu() const;
 
 	// Metoda uruchamiajaca menu i zajmujaca sie wyborem opcji
     void runMenu();
+
     
 private:
 	bool m_ShouldExit = false;

@@ -12,7 +12,7 @@ void AlgorithmComparison::addAlgorithm(std::unique_ptr<SortAlgorithm> algorithm)
 
 //Implementacja metody porownujacej algorytmy na tych samych danych
 void AlgorithmComparison::compareData(const std::vector<double>& data) {
-	std::ofstream wyniki("../data/wyniki.txt");
+	std::ofstream wyniki("./data/wyniki.txt", std::ios::out);
 	double bestTime{};
 	std::string bestAlgorithm;
 	std::cout << std::string(88, '=') << "\n";
@@ -42,6 +42,16 @@ void AlgorithmComparison::compareData(const std::vector<double>& data) {
 		if (static_cast<double>(duration.count()) < bestTime || bestTime == 0) {
 			bestTime = static_cast<double>(duration.count());
 			bestAlgorithm = algorithm->getName();
+		}
+		//Jesli wlaczono zapis do bazy danych, zapisz wynik dzialania algorytmu
+		if (dbManager && dbManager->addToDB) {
+			dbManager->saveResult(
+				algorithm->getName(),
+				static_cast<int>(data.size()),
+				duration.count(),
+				algorithm->getTComplexity(),
+				algorithm->getSComplexity()
+			);
 		}
 
 		std::cout << std::setw(16) << algorithm->getName() 
@@ -99,7 +109,7 @@ std::vector<double> AlgorithmComparison::uploadFileDataset(std::string fileName)
 
 //Implementacja metody generujacej plik z danymi
 void AlgorithmComparison::generateFileDataset(std::string fileName, int dataSize, double min, double max) {
-	std::ofstream file("./data/" + fileName); //Otworzenie pliku do zapisu danych
+	std::ofstream file("../data/" + fileName); //Otworzenie pliku do zapisu danych
 	if (file.good() == true) { //Sprawdzenie czy plik zostal otworzony poprawnie
 		std::vector<double> data = generateDataset(dataSize, min, max); //Wygenerowanie danych
 		for (const double& number : data) { //Petla, ktora zapisuje dane do pliku

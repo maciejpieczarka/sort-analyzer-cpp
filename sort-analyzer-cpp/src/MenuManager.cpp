@@ -37,6 +37,16 @@ void MenuManager::addOption(const std::string& description, const std::function<
     funkcjeOpcji.push_back(action);
 }
 
+int MenuManager::getOptionsCount() const {
+    return static_cast<int>(options.size());
+}
+
+void MenuManager::updateOptionDesc(int index, const std::string& newDesc) {
+    if (index >= 0 && index < static_cast<int>(options.size())) {
+        options[index] = newDesc;
+    }
+}
+
 void MenuManager::displayMenu() const {
 
     std::cout << std::string(88, '=') << "\n";
@@ -57,7 +67,6 @@ void MenuManager::displayMenu() const {
         std::cout << "0. Cofnij\n";
     }
 }
-
 
 
 //Implementacja metody uruchamiajacej menu

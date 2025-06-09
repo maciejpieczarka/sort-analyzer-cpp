@@ -2,6 +2,10 @@
 #include <limits>
 #include <typeinfo>
 #include <cmath>
+#include <conio.h>
+#include <string>
+#include <chrono>
+#include <thread>
 
 //Pliki naglowkowe
 #include "../headers/BubbleSort.h"
@@ -13,6 +17,7 @@
 #include "../headers/AlgorithmComparison.h"
 #include "../headers/MenuManager.h"
 #include "../headers/ConsoleUtils.h"
+#include "../headers/DatabaseManager.h"
 
 
 
@@ -27,7 +32,6 @@ int main()
 	//Zmienne przechowujace ilosc danych oraz zakres generowanych liczb
 	int dataSize{};
 	double dataRange{};
-
 
 	// Zainicjalizowanie obiektow algorytmow jako unikalne wskazniki
 	comparison.addAlgorithm(std::make_unique<BubbleSort>());
@@ -127,18 +131,49 @@ int main()
 		}
 		});
 
-
 	//konfiguracja menu glownego
 	mainMenu.setIsMain(true);
-	//Dodawanie opcji do mennu glownego
+	//Dodawanie opcji do menu glownego
 	mainMenu.addSubMenu("Porownaj algorytmy", dataTypeMenu);
+
+	//Indeks przed dodaniem nowej opcji
+	int idxZapisDB = mainMenu.getOptionsCount();
+
+	//Przygotowanie bazy danych do dzialania
+	DatabaseManager dbManager("./data/sort_analyzer.db");
+	//Wskaznik do AlgorithmComparison, zeby zapisywac dane do bazy
+	comparison.setDatabaseManager(&dbManager);
+
+	//Zapis do bazy danych
+	mainMenu.addOption("Zapis do bazy danych: NIE", [&dbManager, &mainMenu, &idxZapisDB]() {
+		char choice;
+		std::cout << "Czy chcesz zapisac dane do bazy? [T/N]: ";
+		std::cin >> choice;
+
+		if (choice == 't' || choice == 'T') {
+			dbManager.addToDB = true;
+		}
+		else if (choice == 'n' || choice == 'N') {
+			dbManager.addToDB = false;
+		}
+		else {
+			std::cout << "Niepoprawny wybor - zaraz wrocisz do Menu\n";
+			std::this_thread::sleep_for(std::chrono::seconds(2));
+			ConsoleUtils::clear();
+			return;
+		}
+		ConsoleUtils::clear();
+		std::string newDesc = "Zapis do bazy danych: ";
+		newDesc += (dbManager.addToDB ? "TAK" : "NIE");
+		mainMenu.updateOptionDesc(idxZapisDB, newDesc);
+		});
 
 	//Opcja wyswietlajaca instrukcje
 	mainMenu.addOption("O Programie", []() {
 		std::cout << "Sort Analyzer to aplikacja stworzona do porownania wydajnosci 6 algorytmow sortujacych.\n";
 		std::cout << "Aplikacja pozwala na wybor sposobu przekazania danych do sortowania oraz porownanie algorytmow na tych samych danych.\n";
 		std::cout << "Poruszanie sie po menu odbywa sie za pomoca klawiszy numerycznych.\n\n";
-		std::cout << "Aplikacja stworzona przez: Maciej Pieczarka MS - Informatyka. Semestr I, Grupa 2.\n";
+		std::cout << "Aplikacja stworzona przez: Maciej Pieczarka, Szymon Pajak, Piotr Zdebik MS - Informatyka. Semestr II, Grupa 2.\n";
 		});
 
 	//Opcja czyszczenia ekranu konsoli

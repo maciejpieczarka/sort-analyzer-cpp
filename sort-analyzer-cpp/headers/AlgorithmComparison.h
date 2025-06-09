@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SortAlgorithm.h"
+#include "DatabaseManager.h"
 #include <vector>
 #include <memory> //Biblioteka do inteligentnych wskaznikow
 #include <fstream>
@@ -12,6 +13,9 @@ private:
 	// Tablica przyjmuje inteligentny wskaznik "unique_ptr" do obiektu klasy,
 	// gdyz obiekt nie bedzie kopiowany, a inteligentny wskaznik ulatwia zarzadzanie pamiecia.
 	std::vector<std::unique_ptr<SortAlgorithm>> algorithms;
+	
+	//wskaznik do DatabaseManager
+	DatabaseManager* dbManager = nullptr;
 
 public:
 	// Metoda, ktora odpowiada za dodawanie algorytmu do 
@@ -33,4 +37,6 @@ public:
 	static std::vector<double> uploadFileDataset(std::string fileName);
 
 	static void generateFileDataset(std::string fileName, int dataSize, double min = -1e6, double max = 1e6);
+
+	void setDatabaseManager(DatabaseManager* db) { dbManager = db; }
 };

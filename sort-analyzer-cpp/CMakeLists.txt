@@ -9,6 +9,10 @@ include_directories(headers)
 include_directories(src)
 include_directories(tests)
 
+add_library(sqlite3 STATIC external/sqlite/sqlite3.c)
+target_include_directories(sqlite3 PUBLIC external/sqlite)
+target_link_libraries(sort_analyzer_cpp PRIVATE sqlite3)
+
 add_executable(sort_analyzer_cpp
     data/data.txt
     data/Tablica10.txt
@@ -22,6 +26,7 @@ add_executable(sort_analyzer_cpp
     headers/QuickSort.h
     headers/SelectionSort.h
     headers/SortAlgorithm.h
+    headers/DatabaseManager.h
     src/AlgorithmComparision.cpp
     src/BubbleSort.cpp
     src/HeapSort.cpp
@@ -31,6 +36,7 @@ add_executable(sort_analyzer_cpp
     src/MergeSort.cpp
     src/QuickSort.cpp
     src/SelectionSort.cpp
+    src/DatabaseManager.cpp
     tests/data/smallArray.txt
         headers/ConsoleUtils.h
         src/ConsoleUtils.cpp)
