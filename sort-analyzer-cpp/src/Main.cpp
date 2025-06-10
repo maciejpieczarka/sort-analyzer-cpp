@@ -2,7 +2,7 @@
 #include <limits>
 #include <typeinfo>
 #include <cmath>
-#include <conio.h>
+
 #include <string>
 #include <chrono>
 #include <thread>
@@ -19,15 +19,21 @@
 #include "../headers/ConsoleUtils.h"
 #include "../headers/DatabaseManager.h"
 
-
-
 int main()
 {
+	//Przygotowanie bazy danych do dzialania
+	DatabaseManager dbManager("../data/sort_analyzer.db");
+	//Ustawienie dodawania zwyciezcy do bazy jako falsz
+
+
 	//Inicjalizacja klas menu
 	MenuManager mainMenu, dataTypeMenu, algorithmPickerMenu;
 	
 	//Inicjalizacja klasy porownujacej algorytmy
 	AlgorithmComparison comparison;
+
+	//Wskaznik do AlgorithmComparison, zeby zapisywac dane do bazy
+	comparison.setDatabaseManager(&dbManager);
 
 	//Zmienne przechowujace ilosc danych oraz zakres generowanych liczb
 	int dataSize{};
@@ -139,10 +145,7 @@ int main()
 	//Indeks przed dodaniem nowej opcji
 	int idxZapisDB = mainMenu.getOptionsCount();
 
-	//Przygotowanie bazy danych do dzialania
-	DatabaseManager dbManager("./data/sort_analyzer.db");
-	//Wskaznik do AlgorithmComparison, zeby zapisywac dane do bazy
-	comparison.setDatabaseManager(&dbManager);
+
 
 	//Zapis do bazy danych
 	mainMenu.addOption("Zapis do bazy danych: NIE", [&dbManager, &mainMenu, &idxZapisDB]() {
@@ -151,10 +154,10 @@ int main()
 		std::cin >> choice;
 
 		if (choice == 't' || choice == 'T') {
-			dbManager.addToDB = true;
+			ConsoleUtils::DBStatus = true;
 		}
 		else if (choice == 'n' || choice == 'N') {
-			dbManager.addToDB = false;
+			ConsoleUtils::DBStatus = false;
 		}
 		else {
 			std::cout << "Niepoprawny wybor - zaraz wrocisz do Menu\n";
@@ -164,7 +167,7 @@ int main()
 		}
 		ConsoleUtils::clear();
 		std::string newDesc = "Zapis do bazy danych: ";
-		newDesc += (dbManager.addToDB ? "TAK" : "NIE");
+		newDesc += (ConsoleUtils::DBStatus ? "TAK" : "NIE");
 		mainMenu.updateOptionDesc(idxZapisDB, newDesc);
 		});
 
@@ -173,7 +176,7 @@ int main()
 		std::cout << "Sort Analyzer to aplikacja stworzona do porownania wydajnosci 6 algorytmow sortujacych.\n";
 		std::cout << "Aplikacja pozwala na wybor sposobu przekazania danych do sortowania oraz porownanie algorytmow na tych samych danych.\n";
 		std::cout << "Poruszanie sie po menu odbywa sie za pomoca klawiszy numerycznych.\n\n";
-		std::cout << "Aplikacja stworzona przez: Maciej Pieczarka, Szymon Pajak, Piotr Zdebik MS - Informatyka. Semestr II, Grupa 2.\n";
+		std::cout << "Aplikacja stworzona przez: Maciej Pieczarka, Szymon Pajak, Piotr Zdebik MS - Informatyka. Semestr II\n";
 		});
 
 	//Opcja czyszczenia ekranu konsoli

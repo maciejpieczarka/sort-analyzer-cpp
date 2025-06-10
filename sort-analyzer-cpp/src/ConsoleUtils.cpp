@@ -12,3 +12,5 @@ void ConsoleUtils::clear() {
                 std::system("clear");
         #endif
 }
+
+bool ConsoleUtils::DBStatus = false;

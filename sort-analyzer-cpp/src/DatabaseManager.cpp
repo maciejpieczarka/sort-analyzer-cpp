@@ -2,24 +2,28 @@
 #include <iostream>
 #include <sstream>
 
-DatabaseManager::DatabaseManager(const std::string& dbPath) : dbPath(dbPath) {
+sqlite3* DatabaseManager::m_db = nullptr;
+const char* DatabaseManager::m_dbPath = "";
+
+DatabaseManager::DatabaseManager(const char* dbPath){
+	m_dbPath = dbPath;
 	checkConn();
 	createTableSQL();
 }
 
 // Destruktor - zamyka polaczenie z baza
 DatabaseManager::~DatabaseManager() {
-	if (db) {
-		sqlite3_close(db);
-		db = nullptr;
+	if (m_db) {
+		sqlite3_close(m_db);
+		m_db = nullptr;
 	}
 }
 
 //Polaczenie z baza
 void DatabaseManager::checkConn() {
-	if (sqlite3_open(dbPath.c_str(), &db) != SQLITE_OK) {
-		std::cerr << "Blad otwarcia bazy: " << sqlite3_errmsg(db) << "\n";
-		db = nullptr;
+	if (sqlite3_open(m_dbPath, &m_db) != SQLITE_OK) {
+		std::cerr << "Blad otwarcia bazy: " << sqlite3_errmsg(m_db) << "\n";
+		m_db = nullptr;
 	}
 }
 
@@ -34,15 +38,15 @@ void DatabaseManager::createTableSQL() {
 		TimeComplexity TEXT,
 		SpaceComplexity TEXT,
 		CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
-		);"
+		)
 	)";
 	executeQuery(query);
 }
 
 //Wykonywanie zapytan
 void DatabaseManager::executeQuery(const std::string& query) {
-	char* errorMsg = nullptr;
-	int rc = sqlite3_exec(db, query.c_str(), nullptr, nullptr, &errorMsg);
+	char* errorMsg;
+	int rc = sqlite3_exec(m_db, query.c_str(), nullptr, nullptr, &errorMsg);
 
 	if (rc != SQLITE_OK) {
 		std::cerr << "Blad SQL: " << errorMsg << "\n";

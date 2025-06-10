@@ -6,6 +6,8 @@
 #include <random> // Generacja liczb pseudolosowych
 #include <filesystem>
 
+#include "ConsoleUtils.h"
+
 void AlgorithmComparison::addAlgorithm(std::unique_ptr<SortAlgorithm> algorithm) {
 	algorithms.push_back(std::move(algorithm));
 };
@@ -44,7 +46,7 @@ void AlgorithmComparison::compareData(const std::vector<double>& data) {
 			bestAlgorithm = algorithm->getName();
 		}
 		//Jesli wlaczono zapis do bazy danych, zapisz wynik dzialania algorytmu
-		if (dbManager && dbManager->addToDB) {
+		if (dbManager && ConsoleUtils::DBStatus == true) {
 			dbManager->saveResult(
 				algorithm->getName(),
 				static_cast<int>(data.size()),
