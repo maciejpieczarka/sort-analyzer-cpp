@@ -22,7 +22,7 @@
 int main()
 {
 	//Przygotowanie bazy danych do dzialania
-	DatabaseManager dbManager("../data/sort_analyzer.db");
+	DatabaseManager dbManager("./../data/sort_analyzer.db");
 	//Ustawienie dodawania zwyciezcy do bazy jako falsz
 
 
@@ -37,7 +37,8 @@ int main()
 
 	//Zmienne przechowujace ilosc danych oraz zakres generowanych liczb
 	int dataSize{};
-	double dataRange{};
+	double lowerRange{}, upperRange{};
+	std::string userResponse;
 
 	// Zainicjalizowanie obiektow algorytmow jako unikalne wskazniki
 	comparison.addAlgorithm(std::make_unique<BubbleSort>());
@@ -55,56 +56,142 @@ int main()
 
 	//Obsluga generowania losowych danych do sortowania
 	//Przekazanie do funkcji lambda zmiennych dataSize, dataRange oraz comparison poprzez referencje, aby pracowac na oryginalach
-	dataTypeMenu.addOption("Losowo", [&dataSize, &dataRange, &comparison](){
+	dataTypeMenu.addOption("Losowo", [&dataSize, &lowerRange, &upperRange, &comparison, &userResponse](){
+		std::cin.ignore();
 		while (true) {
 			std::cout << "Podaj ilosc danych do wygenerowania (1 - 10 000): ";
-			std::cin >> dataSize;
-			if (dataSize < 1 || dataSize > 100000) {
-				ConsoleUtils::clear();
-				std::cout << "Niepoprawna ilosc danych. Podaj liczbe z zakresu 1 - 10 000.\n";
+
+			try {
+				std::getline(std::cin, userResponse);
+
+				// Jeśli użytkownik nic nie wpisał (tylko Enter) - pomiń
+				if (userResponse.empty()) {
+					std::cout << "Nie podano liczby. Spróbuj ponownie.\n";
+					continue;
+				}
+
+				dataSize = std::stoi(userResponse);
+
+				if (dataSize < 1 || dataSize > 10000) {
+					throw std::out_of_range("Nieprawidłowy zakres");
+				}
+				break; // Jeśli wszystko OK, wyjdź z pętli
 			}
-			else {
-				break;
+			catch (std::invalid_argument const& ex) {
+				std::cout << "Niepoprawny format. Podaj LICZBĘ z zakresu 1 - 10 000.\n";
+				std::cin.clear(); // Wyczyść ewentualne błędy strumienia
+			}
+			catch (std::out_of_range const& ex) {
+				std::cout << "Niepoprawny zakres. Podaj liczbę z zakresu 1 - 10 000.\n";
 			}
 		}
 		ConsoleUtils::clear();
+
 		while (true) {
-			std::cout << "Podaj zakres generowanych liczb: ";
-			std::cin >> dataRange;
-			if (dataRange <= -1e6 || dataRange > 1e6) {
-				ConsoleUtils::clear();
-				std::cout << "Podano nieprawidlowy zakres!\n";
+		std::cout << "Podaj DOLNY zakres generowanych liczb: ";
+		try {
+			std::getline(std::cin, userResponse);
+
+			if (userResponse.empty()) {
+				std::cout << "Nie podano liczby. Spróbuj ponownie.\n";
+				continue;
 			}
-			else {
-				break;
+
+			lowerRange = std::stod(userResponse);
+
+			std::cout << "Podaj GORNY zakres generowanych liczb: ";
+			std::getline(std::cin, userResponse);
+
+			if (userResponse.empty()) {
+				std::cout << "Nie podano liczby. Spróbuj ponownie.\n";
+				continue;
 			}
+
+			upperRange = std::stod(userResponse);
+
+			if (lowerRange >= upperRange) {
+				throw std::out_of_range("Dolny zakres musi byc mniejszy niz gorny");
+			}
+
+			if (std::abs(lowerRange) > 1e6 || std::abs(upperRange) > 1e6) {
+				throw std::out_of_range("Zakres nie moze przekraczac 1 000 000");
+			}
+
+			break;
 		}
+		catch (std::invalid_argument const& ex) {
+			std::cout << "Niepoprawny format. Podaj liczbe.\n";
+			std::cin.clear();
+		}
+		catch (std::out_of_range const& ex) {
+			std::cout << "Blad: " << ex.what() << "\n";
+		}
+	}
 		ConsoleUtils::clear();
 		//Generuje zestaw danych od -1000000 do dataRange
-		std::vector<double> data = comparison.generateDataset(dataSize, -1e6, dataRange);
+		std::vector<double> data = comparison.generateDataset(dataSize, lowerRange, upperRange);
 		comparison.compareData(data);
 		});
 
 	//Obsluga recznego wpisywania danych do sortowania
-	dataTypeMenu.addOption("Recznie", [&comparison, &dataSize]() {
+	dataTypeMenu.addOption("Recznie", [&comparison, &dataSize, &userResponse]() {
 		std::vector<double> data;
 		double num{};
+		//Podanie ilosci liczb do posortowania z walidacja danych i obsluga wyjatkow
+		std::cin.ignore();
 		while (true) {
-			std::cout << "Ile liczb chcesz posortowac? (1 - 100): ";
-			std::cin >> dataSize;
-			if (dataSize < 1 || dataSize > 100) {
-				ConsoleUtils::clear();
-				std::cout << "Niepoprawna ilosc danych. Podaj liczbe z zakresu 1 - 100.\n";
-			}
-			else {
+			try {
+				std::cout << "Ile liczb chcesz posortowac? (1 - 100): ";
+				std::getline(std::cin, userResponse);
+
+				if (userResponse.empty()) {
+					std::cout << "Nie podano liczby. Spróbuj ponownie.\n";
+					continue;
+				}
+
+				dataSize = std::stoi(userResponse);
+
+				if (dataSize < 1 || dataSize > 100) {
+					throw std::out_of_range("Nieprawidłowy zakres");
+				}
 				break;
 			}
+			//Wyjatek wystepujacy w momencie niepoprawnego formatu liczby
+			catch (const std::invalid_argument&) {
+				std::cout << "Niepoprawny format. Podaj LICZBĘ z zakresu 1 - 100.\n";
+			}
+			//Wyjatek wystepujacy w momencie przekroczenia zakresu
+			catch (const std::out_of_range&) {
+				std::cout << "Niepoprawny zakres. Podaj liczbę z zakresu 1 - 100.\n";
+			}
 		}
-		for (int i = 0; i < dataSize; i++) {
-			std::cout << "Podaj liczbe " << i+1 << ": ";
-			std::cin >> num;
-			data.push_back(num);
-		}
+		for (int i = 0; i < dataSize; ) {
+			try {
+				std::cout << "Podaj liczbe " << i+1 << ": ";
+				std::getline(std::cin, userResponse);
+
+				if (userResponse.empty()) {
+					std::cout << "Nie podano liczby. Spróbuj ponownie.\n";
+					continue;
+				}
+
+				num = std::stod(userResponse);
+
+				// Sprawdzenie czy liczba jest skończona (nie NaN ani nieskończoność)
+				if (!std::isfinite(num)) {
+					throw std::invalid_argument("Nieprawidłowa wartość liczbowa");
+				}
+
+				data.push_back(num);
+				i++; // Zwiększ licznik tylko po poprawnym wprowadzeniu
+			}
+			catch (const std::invalid_argument&) {
+				std::cout << "Niepoprawny format. Podaj poprawną liczbę.\n";
+			}
+			catch (const std::out_of_range&) {
+				std::cout << "Podana liczba jest zbyt duża. Spróbuj ponownie.\n";
+			}
+}
 		ConsoleUtils::clear();
 		comparison.compareData(data);
 		});
