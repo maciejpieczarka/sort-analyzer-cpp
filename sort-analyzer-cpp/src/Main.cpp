@@ -58,6 +58,8 @@ int main()
 	//Przekazanie do funkcji lambda zmiennych dataSize, dataRange oraz comparison poprzez referencje, aby pracowac na oryginalach
 	dataTypeMenu.addOption("Losowo", [&dataSize, &lowerRange, &upperRange, &comparison, &userResponse](){
 		std::cin.ignore();
+		// Wprowadzanie danych do generacji liczb
+		// z walidacja danych i obsluga wyjatkow
 		while (true) {
 			std::cout << "Podaj ilosc danych do wygenerowania (1 - 10 000): ";
 
@@ -70,13 +72,16 @@ int main()
 					continue;
 				}
 
+				//konwersja wprowadzonych danych na int
 				dataSize = std::stoi(userResponse);
 
 				if (dataSize < 1 || dataSize > 10000) {
+					//Wyjatek jesli wartosc wykracza poza zakres
 					throw std::out_of_range("Nieprawidłowy zakres");
 				}
 				break; // Jeśli wszystko OK, wyjdź z pętli
 			}
+			//obsluga wyjatkow
 			catch (std::invalid_argument const& ex) {
 				std::cout << "Niepoprawny format. Podaj LICZBĘ z zakresu 1 - 10 000.\n";
 				std::cin.clear(); // Wyczyść ewentualne błędy strumienia
