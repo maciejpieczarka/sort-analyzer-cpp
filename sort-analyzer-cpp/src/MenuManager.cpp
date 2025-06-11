@@ -75,7 +75,16 @@ void MenuManager::runMenu() {
         int wybranaOpcja;
         displayMenu();
         std::cout << "\nTwoj wybor: ";
-        std::cin >> wybranaOpcja;
+
+        if (!(std::cin >> wybranaOpcja))
+        {
+            std::cin.clear(); // Wyczysc flage blednego wejscia
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Czysci bufor wejscia
+            ConsoleUtils::clear();
+            std::cout << "Nieprawidlowy wybor, sprobuj ponownie.\n";
+            continue; // Kontynuuj petle, aby ponownie wyswietlic menu
+        }
+
         ConsoleUtils::clear();
 
         if (wybranaOpcja == 0) {
@@ -85,17 +94,16 @@ void MenuManager::runMenu() {
             break;
         }
 
-		//Sprawdzenie czy wybrana opcja miesci sie w zakresie opcji i uruchomienie odpowiedniej funkcji
+        //Sprawdzenie czy wybrana opcja miesci sie w zakresie opcji i uruchomienie odpowiedniej funkcji
         if (wybranaOpcja > 0 && wybranaOpcja <= static_cast<int>(funkcjeOpcji.size())) { //Konwersja z typu size_t na typ int
             funkcjeOpcji[wybranaOpcja - 1]();   // Wykonaj wybrana funkcje
-			//Jesli ustawiono flage, zakoncz dzialanie menu
+            //Jesli ustawiono flage, zakoncz dzialanie menu
             if (m_ShouldExit) {
-				break;
-			}
+                break;
+            }
         }
         else {
             std::cout << "Zly wybor, sprobuj ponownie\n";
-            
         }
     }
 }
