@@ -10,8 +10,8 @@ public:
 	//Zaimplementowana metoda zwracajaca nazwe algorytmu
 	std::string getName() const override { return "Quick Sort"; };
 
-	//Zaimplementowane metody zwracajace z³o¿onosc czasowa i pamieciowa
-	std::string getTComplexity() const override { return "O(nLog(n))"; }; //TODO: Different time complexity
+	//Zaimplementowane metody zwracajace zï¿½oï¿½onosc czasowa i pamieciowa
+	std::string getTComplexity() const override { return "O(nLog(n))"; };
 	std::string getSComplexity() const override { return "O(n)"; };
 
 private:

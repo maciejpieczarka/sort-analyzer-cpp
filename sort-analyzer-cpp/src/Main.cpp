@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <typeinfo>
+#include <filesystem>
 #include <cmath>
 
 #include <string>
@@ -18,10 +19,17 @@
 #include "../headers/ConsoleUtils.h"
 #include "../headers/DatabaseManager.h"
 
-int main()
+int main(int argc, char* argv[])
 {
+	// Sciezka bezwzgledna do pliku aplikacji
+	std::filesystem::path executable_path = std::filesystem::canonical(std::filesystem::path(argv[0]));
+	std::filesystem::path executable_dir = executable_path.parent_path();
+
+	// Ustawienie obecnej sciezki, aby korzystala z glownej sciezki projektu
+	std::filesystem::current_path(executable_dir);
+
 	// Konfiguracja bazy danych do zapisywania wynikow sortowania
-	DatabaseManager dbManager("./../data/sort_analyzer.db"); 
+	DatabaseManager dbManager("../data/sort_analyzer.db");
 
 	// Tworzenie hierarchii menu: glowne oraz podmenu dla typow danych i wyboru algorytmow
 	MenuManager mainMenu, dataTypeMenu, algorithmPickerMenu;

@@ -25,12 +25,10 @@ public:
 	// gdyz obiekt nie bedzie kopiowany, a inteligentny wskaznik ulatwia zarzadzanie pamiecia.
 	void addAlgorithm(std::unique_ptr<SortAlgorithm> algorithm);
 
-	// Metoda odpowiadajaca za porównywanie algorytmów na tym samym
+	// Metoda odpowiadajaca za porï¿½wnywanie algorytmï¿½w na tym samym
 	// zestawie danych.
-	// W tym wypadku porównanie zachodzi na liczbach
+	// W tym wypadku porï¿½wnanie zachodzi na liczbach
 	void compareData(const std::vector<double>& data);
-
-	// TODO: Metoda do porywnywania nie na liczbach
 
 	static std::vector<double> generateDataset(int dataSize, double min = -1e6, double max = 1e6);
 

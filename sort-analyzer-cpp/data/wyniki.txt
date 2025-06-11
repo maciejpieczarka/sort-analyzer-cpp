@@ -1,0 +1,6 @@
+Bubble Sort 0.001333
+Insertion Sort 0.000875
+Heap Sort 0.000792
+Merge Sort 0.010792
+Selection Sort 0.00075
+Quick Sort 0.000875

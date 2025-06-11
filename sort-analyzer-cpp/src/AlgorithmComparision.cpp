@@ -14,7 +14,7 @@ void AlgorithmComparison::addAlgorithm(std::unique_ptr<SortAlgorithm> algorithm)
 
 //Implementacja metody porownujacej algorytmy na tych samych danych
 void AlgorithmComparison::compareData(const std::vector<double>& data) {
-	std::ofstream wyniki("./data/wyniki.txt", std::ios::out);
+	std::ofstream wyniki("../data/wyniki.txt", std::ios::out);
 	double bestTime{};
 	std::string bestAlgorithm;
 	std::cout << std::string(88, '=') << "\n";
@@ -45,7 +45,7 @@ void AlgorithmComparison::compareData(const std::vector<double>& data) {
 			bestTime = static_cast<double>(duration.count());
 			bestAlgorithm = algorithm->getName();
 		}
-		// Zapisuje wyniki dzia³ania alortytmu do bazy danych, jesli jest aktywna (wskaznik dbManager jest ustawiony i jest wlaczona opcja zapisu)
+		// Zapisuje wyniki dziaï¿½ania alortytmu do bazy danych, jesli jest aktywna (wskaznik dbManager jest ustawiony i jest wlaczona opcja zapisu)
 		if (dbManager && ConsoleUtils::DBStatus == true) {
 			dbManager->saveResult(
 				algorithm->getName(),
