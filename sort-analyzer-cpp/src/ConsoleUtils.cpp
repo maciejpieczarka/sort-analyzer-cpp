@@ -13,4 +13,4 @@ void ConsoleUtils::clear() {
         #endif
 }
 
-bool ConsoleUtils::DBStatus = false;
+bool ConsoleUtils::DBStatus = false; // Database status variable

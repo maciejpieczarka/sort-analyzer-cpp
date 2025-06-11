@@ -1,5 +1,4 @@
 ﻿#include <iostream>
-#include <limits>
 #include <typeinfo>
 #include <cmath>
 
@@ -21,18 +20,16 @@
 
 int main()
 {
-	//Przygotowanie bazy danych do dzialania
-	DatabaseManager dbManager("./../data/sort_analyzer.db");
-	//Ustawienie dodawania zwyciezcy do bazy jako falsz
+	// Konfiguracja bazy danych do zapisywania wynikow sortowania
+	DatabaseManager dbManager("./../data/sort_analyzer.db"); 
 
-
-	//Inicjalizacja klas menu
+	// Tworzenie hierarchii menu: glowne oraz podmenu dla typow danych i wyboru algorytmow
 	MenuManager mainMenu, dataTypeMenu, algorithmPickerMenu;
 	
-	//Inicjalizacja klasy porownujacej algorytmy
+	// Utworzenie obiektu do porownywania wydajnosci algorytmow sortowania
 	AlgorithmComparison comparison;
 
-	//Wskaznik do AlgorithmComparison, zeby zapisywac dane do bazy
+	// Umozliwienie zapisywania wynikow porownań do bazy danych
 	comparison.setDatabaseManager(&dbManager);
 
 	//Zmienne przechowujace ilosc danych oraz zakres generowanych liczb
@@ -237,14 +234,13 @@ int main()
 	//Indeks przed dodaniem nowej opcji
 	int idxZapisDB = mainMenu.getOptionsCount();
 
-
-
-	//Zapis do bazy danych
+	// Dodanie opcji wlaczania/wylaczania zapisu wynikow do bazy danych
 	mainMenu.addOption("Zapis do bazy danych: NIE", [&dbManager, &mainMenu, &idxZapisDB]() {
 		char choice;
 		std::cout << "Czy chcesz zapisac dane do bazy? [T/N]: ";
 		std::cin >> choice;
 
+		// Ustawienie flagi zapisu do bazy na podstawie wyboru uzytkownika
 		if (choice == 't' || choice == 'T') {
 			ConsoleUtils::DBStatus = true;
 		}
@@ -252,12 +248,14 @@ int main()
 			ConsoleUtils::DBStatus = false;
 		}
 		else {
+			// W przypadku niepoprawnego wyboru, powrot do menu po 2 sekundach
 			std::cout << "Niepoprawny wybor - zaraz wrocisz do Menu\n";
 			std::this_thread::sleep_for(std::chrono::seconds(2));
 			ConsoleUtils::clear();
 			return;
 		}
 		ConsoleUtils::clear();
+		// Aktualizacja opisu opcji zapisu w menu glownym (aktualny stan zapisu do bazy danych)
 		std::string newDesc = "Zapis do bazy danych: ";
 		newDesc += (ConsoleUtils::DBStatus ? "TAK" : "NIE");
 		mainMenu.updateOptionDesc(idxZapisDB, newDesc);
